@@ -12,7 +12,7 @@ def execute_cmd(cmd):
     subproc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     out, err = subproc.communicate()
 
-    return out.decode()
+    return out.decode('utf-8')
 
 
 def parse_images(out):

@@ -49,7 +49,7 @@ def run(dockers):
     """
     Runs the window as an application.
     :param dockers: a dictionary of images and containers
-    :return:
+    :return: exit status
     """
     app = Application(dockers)
     exit_status = app.run(sys.argv)

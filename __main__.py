@@ -28,7 +28,7 @@ def process_args(args):
     """
     Processes arguments, then executes the appropriate command.
     :param args:
-    :return: a dixtionary of docker containers and docker images.
+    :return: a dictionary of docker containers and docker images.
     """
 
     if args.i:

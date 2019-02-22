@@ -25,7 +25,7 @@ class Window(Gtk.ApplicationWindow):
         for image in app.images:
             self.page2.add(Gtk.Label(image.__str__()))
 
-        # TODO : Add inspect cmd. Networksettings.Ports in json.
+        # TODO : Add inspect command in a button. Should display ports (Networksettings.Ports).
 
         self.notebook.append_page(self.page1, Gtk.Label("Containers"))
         self.notebook.append_page(self.page2, Gtk.Label("Images"))

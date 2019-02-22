@@ -35,13 +35,13 @@ def process_args(args):
         print("images : ")
         for image in app_utils.ls_images():
             print(image.__str__())
-            exit(0)
+        exit(0)
 
     if args.c:
         print("containers : ")
         for container in app_utils.ls_containers():
             print(container.__str__())
-            exit(0)
+        exit(0)
 
     if args.v:
         print("verbose mode on")

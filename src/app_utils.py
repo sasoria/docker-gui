@@ -17,7 +17,7 @@ def execute_cmd(cmd):
 
 def parse_images(out):
     """
-    Parses images  from std.out and creates a list of <Image> with their respective attributes.
+    Parses images  from std.out and creates a list of <Image> with its respective attributes.
     :param out: std.out
     :return: a list of images.
     """
@@ -36,7 +36,7 @@ def parse_images(out):
 
 def parse_containers(out):
     """
-    Parses containers from st.out and creates a list of <Container> with their respective attributes.
+    Parses containers from st.out and creates a list of <Container> with its respective attributes.
     :param out: std.out
     :return: a list of containers
     """
@@ -48,17 +48,24 @@ def parse_containers(out):
             print("ignoring header")
         else:
             lst = item.split()
-            containers.append(Container(lst[0], lst[-1]))
+            containers.append(Container(lst[0], lst[1], lst[-1]))
 
     return containers
 
 
-"""
+def ls_images():
+    """
+    Perform docker list(ls) command for images.
+    :return: a list of images.
+    """
+    return parse_images(execute_cmd("docker image ls"))
 
-    for container in container_list:
-        print("{0}".format(container.__str__()))
 
-    for image in images:
-        print("*{0}".format(image.__str__()))
+def ls_containers():
+    """
+    Performs docker list(ls) command for containers.
+    :return: a list of containers.
+    """
+    return parse_containers(execute_cmd("docker container ls"))
 
-"""
+

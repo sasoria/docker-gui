@@ -3,12 +3,13 @@
 class Container:
     """Container represents a docker container listed in <docker ps> or
     <docker container ls>"""
-    def __init__(self, container_id, name):
+    def __init__(self, container_id, image, name):
         self.container_id = container_id
+        self.image = image
         self.name = name
 
     def __str__(self):
-        return "Container : " + self.name
+        return "{0} ({1})".format(self.name, self.image)
 
 
 class Image:

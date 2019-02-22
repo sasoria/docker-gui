@@ -6,32 +6,36 @@ import sys
 
 class Window(Gtk.ApplicationWindow):
     def __init__(self, app):
-        print("{0}".format(app.args))
-
         Gtk.Window.__init__(self, title="dockger-gui", application=app)
+        self.set_border_width(3)
         self.set_default_size(200, 100)
-        # TODO : Add Notebook
-        hbox = Gtk.Box(spacing=10)
-        hbox.set_homogeneous(False)
-        vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        vbox_left.set_homogeneous(False)
-        vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        vbox_right.set_homogeneous(False)
 
-        hbox.pack_start(vbox_left, True, True, 0)
-        hbox.pack_start(vbox_right, True, True, 0)
+        self.notebook = Gtk.Notebook()
+        self.add(self.notebook)
 
-        # TODO : add both images and containers
-        for arg in app.args:
-            vbox_left.pack_start(Gtk.Label(arg), True, True, 0)
+        # Containers
+        self.page1 = Gtk.ListBox()
+        self.page1.set_border_width(10)
+        for container in app.containers:
+            self.page1.add(Gtk.Label(container.__str__()))
 
-        self.add(hbox)
+        # Images
+        self.page2 = Gtk.ListBox()
+        self.page2.set_border_width(10)
+        for image in app.images:
+            self.page2.add(Gtk.Label(image.__str__()))
+
+        # TODO : Add inspect cmd. Networksettings.Ports in json.
+
+        self.notebook.append_page(self.page1, Gtk.Label("Containers"))
+        self.notebook.append_page(self.page2, Gtk.Label("Images"))
 
 
 class Application(Gtk.Application):
-    def __init__(self, args):
+    def __init__(self, dockers):
         Gtk.Application.__init__(self)
-        self.args = args
+        self.images = dockers['images']
+        self.containers = dockers['containers']
 
     def do_activate(self):
         win = Window(self)
@@ -41,12 +45,13 @@ class Application(Gtk.Application):
         Gtk.Application.do_startup(self)
 
 
-def run(args):
+def run(dockers):
     """
-    Runs the window as an application, passes a list of docker container/images.
-    :param args:
+    Runs the window as an application.
+    :param dockers: a dictionary of images and containers
     :return:
     """
-    app = Application(args)
+    app = Application(dockers)
     exit_status = app.run(sys.argv)
     sys.exit(exit_status)
+

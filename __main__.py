@@ -28,31 +28,35 @@ def process_args(args):
     """
     Processes arguments, then executes the appropriate command.
     :param args:
-    :return: a list of either docker containers or docker images
+    :return: a dixtionary of docker containers and docker images.
     """
-    docker_list = []
 
-    """if args.i:"""
-    if 1:
-        docker_list = app_utils.parse_images(
-            app_utils.execute_cmd("docker image ls"))
+    if args.i:
+        print("images : ")
+        for image in app_utils.ls_images():
+            print(image.__str__())
 
     if args.c:
-        docker_list = app_utils.parse_containers(
-            app_utils.execute_cmd("docker container ls"))
+        print("containers : ")
+        for container in app_utils.ls_containers():
+            print(container.__str__())
 
-    return docker_list
+    if args.v:
+        print("verbose mode on")
+
+    return {
+        'images': app_utils.ls_images(),
+        'containers': app_utils.ls_containers()
+    }
 
 
 def main():
     args = read_args()
     dockers = process_args(args)
-
     _gui = __import__("gui.app_window", fromlist=['app_window'])
     _gui.run(dockers)
 
 
 if __name__ == "__main__":
     main()
-
 

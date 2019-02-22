@@ -24,9 +24,9 @@ def parse_images(out):
     images = []
     for item in out.split("\n"):
         if len(item) == 0:
-            print("ignoring empty list")
+            # ignoring empty list
         elif item.split()[0] == "REPOSITORY":
-            print("ignoring header")
+            # ignoring header
         else:
             lst = item.split()
             images.append(Image(lst[0], lst[1], lst[2], lst[3]))
@@ -43,9 +43,9 @@ def parse_containers(out):
     containers = []
     for item in out.split("\n"):
         if len(item) == 0:
-            print("ignoring empty list")
+            # ignoring empty list
         elif item.split()[0] == "CONTAINER":
-            print("ignoring header")
+            # ignoring header
         else:
             lst = item.split()
             containers.append(Container(lst[0], lst[1], lst[-1]))

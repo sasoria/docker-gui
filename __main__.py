@@ -27,7 +27,7 @@ def read_args():
 def process_args(args):
     """
     Processes arguments, then executes the appropriate command.
-    :param args:
+    :param args: parsed arguments
     :return: a dictionary of docker containers and docker images.
     """
 

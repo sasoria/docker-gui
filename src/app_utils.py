@@ -55,7 +55,7 @@ def parse_containers(out):
 
 def ls_images():
     """
-    Perform docker list(ls) command for images.
+    Performs docker list(ls) command for images.
     :return: a list of images.
     """
     return parse_images(execute_cmd("docker image ls"))

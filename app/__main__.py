@@ -1,5 +1,5 @@
 import argparse
-from . src import app_utils
+from src import app_utils
 
 
 def read_args():

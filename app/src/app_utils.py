@@ -14,6 +14,7 @@ def execute_cmd(cmd):
 
     if err:
         print("Error : {0}".format(err))
+        return 1
 
     return out.decode('utf-8')
 

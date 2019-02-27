@@ -12,6 +12,9 @@ def execute_cmd(cmd):
     subproc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     out, err = subproc.communicate()
 
+    if err:
+        print("Error : {0}".format(err))
+
     return out.decode('utf-8')
 
 

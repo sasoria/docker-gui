@@ -64,7 +64,11 @@ class Window(Gtk.ApplicationWindow):
     def on_click_inspect(self, button, container):
         container_string = app_utils.execute_cmd("docker inspect {}".format(container.container_id))
         container_json = json.loads(container_string)
-        print(container_json)
+        # TODO : implement a new gtk window that displays
+
+        for item in container_json:
+            for j in item:
+                print(j)
 
     def on_click_run(self, button, image):
         app_utils.execute_cmd("docker run {0}".format(image.__str__()))

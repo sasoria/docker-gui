@@ -15,20 +15,20 @@ class Window(Gtk.ApplicationWindow):
         self.add(self.notebook)
 
         # Containers
-        self.page1 = Gtk.ListBox()
-        self.page1.set_border_width(10)
-        self.page1.set_selection_mode(Gtk.SelectionMode.NONE)
+        self.container_page = Gtk.ListBox()
+        self.container_page.set_border_width(10)
+        self.container_page.set_selection_mode(Gtk.SelectionMode.NONE)
         for container in app.containers:
             row = self.create_row(container, self.on_click_inspect, "inspect")
-            self.page1.add(row)
+            self.container_page.add(row)
 
         # Images
-        self.page2 = Gtk.ListBox()
-        self.page2.set_border_width(10)
-        self.page2.set_selection_mode(Gtk.SelectionMode.NONE)
+        self.image_page = Gtk.ListBox()
+        self.image_page.set_border_width(10)
+        self.image_page.set_selection_mode(Gtk.SelectionMode.NONE)
         for image in app.images:
             row = self.create_row(image, self.on_click_run, "run")
-            self.page2.add(row)
+            self.image_page.add(row)
 
         self.notebook.append_page(self.page1, Gtk.Label("Containers"))
         self.notebook.append_page(self.page2, Gtk.Label("Images"))

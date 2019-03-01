@@ -39,17 +39,26 @@ class Window(Gtk.ApplicationWindow):
 
         row.add(box)
 
-        label = Gtk.Label(docker_component.__str__())
-        label.set_justify(Gtk.Justification.FILL)
-        label.set_line_wrap(True)
-
-        button = Gtk.Button.new_with_label(button_label)
-        button.connect("clicked", on_click, docker_component)
+        label = self.create_label(docker_component.__str__())
+        button = self.create_button(button_label, docker_component, on_click)
 
         box.pack_start(label, True, True, 0)
         box.pack_start(button, True, True, 0)
 
         return row
+
+    def create_label(self, label_name):
+        label = Gtk.Label(label_name)
+        label.set_justify(Gtk.Justification.FILL)
+        label.set_line_wrap(True)
+
+        return label
+
+    def create_button(self, button_label, docker_component, on_click):
+        button = Gtk.Button.new_with_label(button_label)
+        button.connect("clicked", on_click, docker_component)
+
+        return button
 
     def on_click_inspect(self, button, container):
         print(container.__str__)

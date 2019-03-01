@@ -1,4 +1,5 @@
 import subprocess
+import sys
 from .app_blocks import Container
 from .app_blocks import Image
 
@@ -14,7 +15,7 @@ def execute_cmd(cmd):
 
     if err:
         print("Error : {0}".format(err))
-        return 1
+        sys.exit()
 
     return out.decode('utf-8')
 

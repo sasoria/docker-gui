@@ -19,7 +19,7 @@ class Window(Gtk.ApplicationWindow):
         self.page1.set_border_width(10)
         self.page1.set_selection_mode(Gtk.SelectionMode.NONE)
         for container in app.containers:
-            row = self.create_row(container, self.on_click_inspect)
+            row = self.create_row(container, self.on_click_inspect, "inspect")
             self.page1.add(row)
 
         # Images
@@ -27,13 +27,13 @@ class Window(Gtk.ApplicationWindow):
         self.page2.set_border_width(10)
         self.page2.set_selection_mode(Gtk.SelectionMode.NONE)
         for image in app.images:
-            row = self.create_row(image, self.on_click_run)
+            row = self.create_row(image, self.on_click_run, "run")
             self.page2.add(row)
 
         self.notebook.append_page(self.page1, Gtk.Label("Containers"))
         self.notebook.append_page(self.page2, Gtk.Label("Images"))
 
-    def create_row(self, docker_component, on_click):
+    def create_row(self, docker_component, on_click, button_label):
         row = Gtk.ListBoxRow()
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
 
@@ -43,7 +43,7 @@ class Window(Gtk.ApplicationWindow):
         label.set_justify(Gtk.Justification.FILL)
         label.set_line_wrap(True)
 
-        button = Gtk.Button.new_with_label("run")
+        button = Gtk.Button.new_with_label(button_label)
         button.connect("clicked", on_click, docker_component)
 
         box.pack_start(label, True, True, 0)

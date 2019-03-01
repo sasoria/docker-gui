@@ -15,7 +15,7 @@ def execute_cmd(cmd):
 
     if err:
         print("Error : {0}".format(err))
-        sys.exit()
+        sys.exit(1)
 
     return out.decode('utf-8')
 

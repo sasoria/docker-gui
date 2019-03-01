@@ -30,8 +30,8 @@ class Window(Gtk.ApplicationWindow):
             row = self.create_row(image, self.on_click_run, "run")
             self.image_page.add(row)
 
-        self.notebook.append_page(self.page1, Gtk.Label("Containers"))
-        self.notebook.append_page(self.page2, Gtk.Label("Images"))
+        self.notebook.append_page(self.container_page, Gtk.Label("Containers"))
+        self.notebook.append_page(self.image_page, Gtk.Label("Images"))
 
     def create_row(self, docker_component, on_click, button_label):
         row = Gtk.ListBoxRow()

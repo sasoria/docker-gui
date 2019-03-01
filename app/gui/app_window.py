@@ -1,4 +1,5 @@
 import gi.repository.Gtk as Gtk
+import json
 import sys
 # from gi import require_version
 # require_version("GTK", "3.0")
@@ -61,7 +62,8 @@ class Window(Gtk.ApplicationWindow):
         return button
 
     def on_click_inspect(self, button, container):
-        container_json = app_utils.execute_cmd("docker inspect {}".format(container.id))
+        container_string = app_utils.execute_cmd("docker inspect {}".format(container.container_id))
+        container_json = json.loads(container_string)
         print(container_json)
 
     def on_click_run(self, button, image):

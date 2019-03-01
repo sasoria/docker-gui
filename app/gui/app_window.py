@@ -19,21 +19,7 @@ class Window(Gtk.ApplicationWindow):
         self.page1.set_border_width(10)
         self.page1.set_selection_mode(Gtk.SelectionMode.NONE)
         for container in app.containers:
-            row = Gtk.ListBoxRow()
-            box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
-
-            row.add(box)
-
-            label = Gtk.Label(container.__str__())
-            label.set_justify(Gtk.Justification.FILL)
-            label.set_line_wrap(True)
-
-            button = Gtk.Button.new_with_label("run")
-            button.connect("clicked", self.on_click_run, container)
-
-            box.pack_start(label, True, True, 0)
-            box.pack_start(button, True, True, 0)
-
+            row = self.create_row(container, self.on_click_inspect)
             self.page1.add(row)
 
         # Images
@@ -41,29 +27,13 @@ class Window(Gtk.ApplicationWindow):
         self.page2.set_border_width(10)
         self.page2.set_selection_mode(Gtk.SelectionMode.NONE)
         for image in app.images:
-            row = Gtk.ListBoxRow()
-            box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
-
-            row.add(box)
-
-            label = Gtk.Label(image.__str__())
-            label.set_justify(Gtk.Justification.FILL)
-            label.set_line_wrap(True)
-
-            button = Gtk.Button.new_with_label("run")
-            button.connect("clicked", self.on_click_run, image)
-
-            box.pack_start(label, True, True, 0)
-            box.pack_start(button, True, True, 0)
-
+            row = self.create_row(image, self.on_click_run)
             self.page2.add(row)
-
-        # TODO : Add inspect command in a button. Should display ports (Networksettings.Ports).
 
         self.notebook.append_page(self.page1, Gtk.Label("Containers"))
         self.notebook.append_page(self.page2, Gtk.Label("Images"))
 
-    def create_docker_component_row(self, docker_component, on_click):
+    def create_row(self, docker_component, on_click):
         row = Gtk.ListBoxRow()
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
 

@@ -61,8 +61,8 @@ class Window(Gtk.ApplicationWindow):
         return button
 
     def on_click_inspect(self, button, container):
-        print(container.__str__)
-        print(container.id)
+        container_json = app_utils.execute_cmd("docker inspect {}".format(container.id))
+        print(container_json)
 
     def on_click_run(self, button, image):
         app_utils.execute_cmd("docker run {0}".format(image.__str__()))

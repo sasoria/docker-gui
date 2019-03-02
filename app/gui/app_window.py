@@ -52,6 +52,8 @@ class Window(Gtk.ApplicationWindow):
         label = Gtk.Label(label_name)
         label.set_justify(Gtk.Justification.FILL)
         label.set_line_wrap(True)
+        # FIXME : fix signal for label click
+        label.connect("activate-link", self.on_click_run, label_name)
 
         return label
 

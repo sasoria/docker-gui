@@ -4,6 +4,7 @@ import sys
 # from gi import require_version
 # require_version("GTK", "3.0")
 from src import app_utils
+from . inspect_window import InspectWindow
 
 
 class Window(Gtk.ApplicationWindow):
@@ -68,9 +69,10 @@ class Window(Gtk.ApplicationWindow):
         container_json = json.loads(container_string)
         # TODO : implement a new gtk window that displays
 
-        for item in container_json:
-            for j in item:
-                print(j)
+        print(container_json)
+        inspect_window = InspectWindow(container_json)
+        inspect_window.connect("destroy", Gtk.main_quit)
+        inspect_window.show_all()
 
     def on_click_run(self, button, image):
         app_utils.execute_cmd("docker run {0}".format(image.__str__()))

@@ -77,7 +77,7 @@ class Window(Gtk.ApplicationWindow):
         inspect_window.show_all()
 
     def on_click_run(self, button, image):
-        docker_commands.docker_run(self.app.docker_client, image.tags[0])
+        docker_commands.run(self.app.docker_client, image.tags[0])
         dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
                                    Gtk.ButtonsType.OK,
                                    "{0} is running".format(image))

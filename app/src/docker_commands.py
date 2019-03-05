@@ -41,6 +41,7 @@ def docker_inspect(docker_client, container):
 
 
 def docker_list_images(docker_client, image):
+    # docker.errors.APIError:
     pass
 
 

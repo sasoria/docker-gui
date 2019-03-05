@@ -20,6 +20,12 @@ def execute_cmd(cmd):
 
 
 def docker_run(docker_client, image):
+    """
+    Runs a docker image.
+    :param docker_client: docker client
+    :param image: docker image
+    :return:
+    """
     try:
         docker_client.containers.run(image)
     except docker.errors.ContainerError:

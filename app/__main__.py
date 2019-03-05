@@ -36,7 +36,7 @@ def process_args(args, docker_client):
     if args.i:
         print("images : ")
         for image in docker_commands.list_images(docker_client):
-            print(image)
+            print(image.tag[0])
         exit(0)
 
     if args.c:

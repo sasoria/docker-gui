@@ -68,9 +68,9 @@ class Window(Gtk.ApplicationWindow):
     def on_click_inspect(self, button, container):
         container_string = app_utils.execute_cmd("docker inspect {}".format(container.container_id))
         container_json = json.loads(container_string)
-        # TODO : implement a new gtk window that displays
 
         print(container_json)
+
         inspect_window = InspectWindow(container_json)
         inspect_window.connect("destroy", Gtk.main_quit)
         inspect_window.show_all()

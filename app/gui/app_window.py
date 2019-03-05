@@ -1,9 +1,9 @@
 import gi.repository.Gtk as Gtk
+import docker
 import json
 import sys
 # from gi import require_version
 # require_version("GTK", "3.0")
-from src import app_utils
 from . inspect_window import InspectWindow
 
 
@@ -12,6 +12,7 @@ class Window(Gtk.ApplicationWindow):
         Gtk.Window.__init__(self, title="dockger-gui", application=app)
         self.set_border_width(3)
         self.set_default_size(400, 200)
+        self.app = app
 
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
@@ -75,10 +76,12 @@ class Window(Gtk.ApplicationWindow):
         inspect_window.show_all()
 
     def on_click_run(self, button, image):
-        app_utils.execute_cmd("docker run {0}".format(image.__str__()))
+        # FIXME : check if image is represented correctly
+        self.app.docker_client.containers.run(image)
+
         dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
                                    Gtk.ButtonsType.OK,
-                                   "{0} is running".format(image.__str__()))
+                                   "{0} is running".format(image))
         dialog.run()
         print("INFO: dialog closed")
 
@@ -86,10 +89,11 @@ class Window(Gtk.ApplicationWindow):
 
 
 class Application(Gtk.Application):
-    def __init__(self, dockers):
+    def __init__(self, dockers, docker_client):
         Gtk.Application.__init__(self)
         self.images = dockers['images']
         self.containers = dockers['containers']
+        self.docker_client = docker_client
 
     def do_activate(self):
         win = Window(self)
@@ -99,13 +103,14 @@ class Application(Gtk.Application):
         Gtk.Application.do_startup(self)
 
 
-def run(dockers):
+def run(dockers, docker_client):
     """
     Runs the window as an application.
     :param dockers: a dictionary of images and containers
+    :param docker_client: docker sdk client
     :return: exit status
     """
-    app = Application(dockers)
+    app = Application(dockers, docker_client)
     exit_status = app.run(sys.argv)
     sys.exit(exit_status)
 

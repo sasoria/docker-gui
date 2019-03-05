@@ -59,7 +59,7 @@ def main():
     args = read_args()
     dockers = process_args(args, docker_client)
     _gui = __import__("gui.app_window", fromlist=['app_window'])
-    _gui.run(dockers)
+    _gui.run(dockers, docker_client)
 
 
 if __name__ == "__main__":

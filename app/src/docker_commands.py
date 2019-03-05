@@ -27,7 +27,7 @@ def run(docker_client, image):
     :return:
     """
     try:
-        docker_client.containers.run(image)
+        docker_client.containers.run(image, detach=True)
     except docker.errors.ContainerError:
         print("Error : container is already running")
     except docker.errors.ImageNotFound:

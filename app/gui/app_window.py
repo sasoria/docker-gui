@@ -77,10 +77,11 @@ class Window(Gtk.ApplicationWindow):
         inspect_window.show_all()
 
     def on_click_run(self, button, image):
-        docker_commands.run(self.app.docker_client, image.tags[0])
+        image_tag = image.tags[0]
+        docker_commands.run(self.app.docker_client, image_tag)
         dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
                                    Gtk.ButtonsType.OK,
-                                   "{0} is running".format(image))
+                                   "{0} is running".format(image_tag))
         dialog.run()
         print("INFO: dialog closed")
 

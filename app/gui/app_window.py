@@ -2,7 +2,7 @@ import gi.repository.Gtk as Gtk
 import docker
 import json
 import sys
-from src import app_utils
+from src import docker_commands
 # from gi import require_version
 # require_version("GTK", "3.0")
 from . inspect_window import InspectWindow
@@ -78,7 +78,10 @@ class Window(Gtk.ApplicationWindow):
 
     def on_click_run(self, button, image):
         # FIXME : check if image is represented correctly
-        app_utils.docker_run(self.app.docker_client, image)
+        docker_commands.docker_run(self.app.docker_client, image)
+        print(
+            "".format(image.)
+        )
 
         dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
                                    Gtk.ButtonsType.OK,

@@ -38,3 +38,11 @@ def docker_run(docker_client, image):
 
 def docker_inspect(docker_client, container):
     pass
+
+
+def docker_list_images(docker_client, image):
+    pass
+
+
+def docker_list_containers(docker_client, container):
+    pass

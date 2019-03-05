@@ -1,4 +1,5 @@
 import subprocess
+import docker
 import sys
 
 
@@ -16,3 +17,14 @@ def execute_cmd(cmd):
         sys.exit(1)
 
     return out.decode('utf-8')
+
+
+def docker_run(docker_client, image):
+    try:
+        docker_client.containers.run(image)
+    except docker.errors.ContainerError:
+        print("Error : container is already running")
+    except docker.errors.ImageNotFound:
+        print("Error : image not found")
+    except docker.errors.APIError:
+        print("Error : server returned an error")

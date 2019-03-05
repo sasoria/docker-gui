@@ -2,6 +2,7 @@ import gi.repository.Gtk as Gtk
 import docker
 import json
 import sys
+from src import app_utils
 # from gi import require_version
 # require_version("GTK", "3.0")
 from . inspect_window import InspectWindow
@@ -42,15 +43,15 @@ class Window(Gtk.ApplicationWindow):
 
         row.add(box)
 
-        label = self.create_label(docker_component.__str__())
-        button = self.create_button(button_label, docker_component, on_click)
+        label = self._create_label(docker_component.__str__())
+        button = self._create_button(button_label, docker_component, on_click)
 
         box.pack_start(label, True, True, 0)
         box.pack_start(button, True, True, 0)
 
         return row
 
-    def create_label(self, label_name):
+    def _create_label(self, label_name):
         label = Gtk.Label(label_name)
         label.set_justify(Gtk.Justification.FILL)
         label.set_line_wrap(True)
@@ -59,7 +60,7 @@ class Window(Gtk.ApplicationWindow):
 
         return label
 
-    def create_button(self, button_label, docker_component, on_click):
+    def _create_button(self, button_label, docker_component, on_click):
         button = Gtk.Button.new_with_label(button_label)
         button.connect("clicked", on_click, docker_component)
 
@@ -77,7 +78,7 @@ class Window(Gtk.ApplicationWindow):
 
     def on_click_run(self, button, image):
         # FIXME : check if image is represented correctly
-        self.app.docker_client.containers.run(image)
+        app_utils.docker_run(self.app.docker_client, image)
 
         dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
                                    Gtk.ButtonsType.OK,

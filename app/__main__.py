@@ -1,6 +1,6 @@
 import argparse
 import docker
-#from src import app_utils
+from src import docker_commands
 
 
 def read_args():
@@ -35,13 +35,13 @@ def process_args(args, docker_client):
 
     if args.i:
         print("images : ")
-        for image in docker_client.images.list():
+        for image in docker_commands.list_images(docker_client):
             print(image)
         exit(0)
 
     if args.c:
         print("containers : ")
-        for container in docker_client.images.list():
+        for container in docker_commands.list_containers(docker_client):
             print(container)
         exit(0)
 
@@ -49,8 +49,8 @@ def process_args(args, docker_client):
         print("verbose mode on")
 
     return {
-        'images': docker_client.images.list(),
-        'containers': docker_client.containers.list()
+        'images': docker_commands.list_images(docker_client),
+        'containers': docker_commands.list_containers(docker_client)
     }
 
 

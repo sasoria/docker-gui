@@ -19,7 +19,7 @@ def execute_cmd(cmd):
     return out.decode('utf-8')
 
 
-def docker_run(docker_client, image):
+def run(docker_client, image):
     """
     Runs a docker image.
     :param docker_client: docker client
@@ -36,14 +36,14 @@ def docker_run(docker_client, image):
         print("Error : server returned an error")
 
 
-def docker_inspect(docker_client, container):
+def inspect(docker_client, container):
     pass
 
 
-def docker_list_images(docker_client, image):
+def list_images(docker_client):
     # docker.errors.APIError:
     pass
 
 
-def docker_list_containers(docker_client, container):
+def list_containers(docker_client):
     pass

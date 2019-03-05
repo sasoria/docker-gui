@@ -21,8 +21,8 @@ def execute_cmd(cmd):
 
 def run(docker_client, image):
     """
-    Runs a docker image.
-    :param docker_client: docker client
+    Runs a docker image as a container.
+    :param docker_client: docker sdk client
     :param image: docker image
     :return:
     """
@@ -33,7 +33,7 @@ def run(docker_client, image):
     except docker.errors.ImageNotFound:
         print("Error : image not found")
     except docker.errors.APIError:
-        print("Error : server returned an error")
+        print("Error : server returned an api error")
 
 
 def inspect(docker_client, container):
@@ -41,9 +41,28 @@ def inspect(docker_client, container):
 
 
 def list_images(docker_client):
-    # docker.errors.APIError:
-    pass
+    """
+    Lists docker images.
+    :param docker_client: docker sdk client
+    :return: a list of images
+    """
+    try:
+        images = docker_client.images.list()
+    except docker.errors.APIError:
+        print("Error : server returned an api Error")
+
+    return images
 
 
 def list_containers(docker_client):
-    pass
+    """
+    Lists docker containers.
+    :param docker_client: docker sdk client
+    :return: a list of containers
+    """
+    try:
+        containers = docker_client.containers.list()
+    except docker.errors.APIError:
+        print("Error : server returned an api Error")
+
+    return containers

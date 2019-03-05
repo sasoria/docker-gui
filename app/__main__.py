@@ -1,5 +1,6 @@
 import argparse
-from src import app_utils
+import docker
+#from src import app_utils
 
 
 def read_args():
@@ -24,7 +25,7 @@ def read_args():
     return parser.parse_args()
 
 
-def process_args(args):
+def process_args(args, docker_client):
     """
     Processes arguments, then executes the appropriate command.
     :param args: parsed arguments
@@ -47,18 +48,18 @@ def process_args(args):
         print("verbose mode on")
 
     return {
-        'images': app_utils.ls_images(),
-        'containers': app_utils.ls_containers()
+        'images': docker_client.images.list(),
+        'containers': docker_client.containers.list()
     }
 
 
 def main():
+    docker_client = docker.from_env()
     args = read_args()
-    dockers = process_args(args)
+    dockers = process_args(args, docker_client)
     _gui = __import__("gui.app_window", fromlist=['app_window'])
     _gui.run(dockers)
 
 
 if __name__ == "__main__":
     main()
-

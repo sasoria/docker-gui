@@ -1,4 +1,5 @@
 import subprocess
+import docker
 import sys
 from .app_blocks import Container
 from .app_blocks import Image

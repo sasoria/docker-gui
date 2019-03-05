@@ -24,16 +24,18 @@ def run(docker_client, image):
     Runs a docker image as a container.
     :param docker_client: docker sdk client
     :param image: docker image
-    :return:
+    :return: container created from the image
     """
     try:
-        docker_client.containers.run(image, detach=True)
+        container = docker_client.containers.run(image, detach=True)
     except docker.errors.ContainerError:
         print("Error : container is already running")
     except docker.errors.ImageNotFound:
         print("Error : image not found")
     except docker.errors.APIError:
         print("Error : server returned an api error")
+
+    return container
 
 
 def inspect(docker_client, container):
@@ -66,3 +68,10 @@ def list_containers(docker_client):
         print("Error : server returned an api Error")
 
     return containers
+
+
+def kill(container):
+    try:
+        container.kill()
+    except docker.errors.APIError:
+        print("Error : server returned an api Error")

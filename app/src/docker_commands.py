@@ -34,3 +34,7 @@ def docker_run(docker_client, image):
         print("Error : image not found")
     except docker.errors.APIError:
         print("Error : server returned an error")
+
+
+def docker_inspect(docker_client, container):
+    pass

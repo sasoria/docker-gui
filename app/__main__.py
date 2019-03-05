@@ -29,19 +29,20 @@ def process_args(args, docker_client):
     """
     Processes arguments, then executes the appropriate command.
     :param args: parsed arguments
+    :param docker_client: docker sdk client
     :return: a dictionary of docker containers and docker images.
     """
 
     if args.i:
         print("images : ")
-        for image in app_utils.ls_images():
-            print(image.__str__())
+        for image in docker_client.images.list():
+            print(image)
         exit(0)
 
     if args.c:
         print("containers : ")
-        for container in app_utils.ls_containers():
-            print(container.__str__())
+        for container in docker_client.images.list():
+            print(container)
         exit(0)
 
     if args.v:

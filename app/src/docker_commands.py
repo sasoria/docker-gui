@@ -38,8 +38,19 @@ def run(docker_client, image):
     return container
 
 
-def inspect(docker_client, container):
-    pass
+def inspect(container):
+    """
+    Inspects a docker container. This is not equivalent to <docker inspect>,
+    because it lacks some information (See SDK documentation for details).
+    :param container: container to be inspected
+    :return: representation of the container in a dict
+    """
+
+    if container is None:
+        print("Error : missing a container")
+        return None
+
+    return container.attrs
 
 
 def list_images(docker_client):

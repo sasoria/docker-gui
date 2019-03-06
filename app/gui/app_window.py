@@ -1,5 +1,4 @@
 import gi.repository.Gtk as Gtk
-import docker
 import json
 import sys
 from src import docker_commands
@@ -67,8 +66,7 @@ class Window(Gtk.ApplicationWindow):
         return button
 
     def on_click_inspect(self, button, container):
-        container_string = app_utils.execute_cmd("docker inspect {}".format(container.container_id))
-        container_json = json.loads(container_string)
+        container_json = json.loads(docker_commands.inspect(container))
 
         print(container_json)
 

@@ -81,9 +81,16 @@ class Window(Gtk.ApplicationWindow):
         print(container.id)
         container_data = docker_commands.inspect(container)
 
-        inspect_window = InspectWindow(container_data)
-        inspect_window.connect("destroy", Gtk.main_quit)
-        inspect_window.show_all()
+        b = Gtk.Button("test")
+        # TODO : clear pane 2 before adding.
+        self.container_info_listbox.add(Gtk.Label(container_data['Config']['Image']))
+        # Updates GtkWidget
+        self.show_all()
+
+        # TODO : add custom listbox::container to clean up code
+        # inspect_window = InspectWindow(container_data)
+        # inspect_window.connect("destroy", Gtk.main_quit)
+        # inspect_window.show_all()
 
     def on_click_run(self, button, image):
         image_tag = image.tags[0]

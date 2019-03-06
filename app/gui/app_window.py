@@ -21,10 +21,12 @@ class Window(Gtk.ApplicationWindow):
 
         # Containers
         self.container_listbox = Gtk.ListBox()
+        self.container_listbox.connect("row-activated", self.on_click_inspect)
         self.container_listbox.set_border_width(10)
         self.container_info_listbox = Gtk.ListBox()
         for container in app.containers:
             row = Gtk.ListBoxRow()
+            #row.connect("row-selected", self.on_click_inspect, container)
             box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
 
             row.add(box)
@@ -42,7 +44,6 @@ class Window(Gtk.ApplicationWindow):
         self.image_page.set_border_width(10)
         self.image_page.set_selection_mode(Gtk.SelectionMode.NONE)
         for image in app.images:
-            #row = self._create_row(image, self.on_click_run, "run")
             row = Gtk.ListBoxRow()
             box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
 
@@ -59,7 +60,7 @@ class Window(Gtk.ApplicationWindow):
         self.notebook.append_page(self.image_page, Gtk.Label("Images"))
 
     def _create_label(self, label_name):
-        label = Gtk.Label(label_name)
+        label = Gtk.Label(label_name, xalign=0)
         label.set_justify(Gtk.Justification.LEFT)
         label.set_line_wrap(True)
 
@@ -71,7 +72,11 @@ class Window(Gtk.ApplicationWindow):
 
         return button
 
-    def on_click_inspect(self, button, container):
+    def on_click_inspect(self, listbox, container):
+        row = listbox.get_selected_row()
+        label = row.get_child().get_children()[0]
+        print(label.get_label())
+        # TODO : create custom Gtk.Label with container id.
         container_data = docker_commands.inspect(container)
 
         inspect_window = InspectWindow(container_data)

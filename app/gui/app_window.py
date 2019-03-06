@@ -11,51 +11,57 @@ class Window(Gtk.ApplicationWindow):
     def __init__(self, app):
         Gtk.Window.__init__(self, title="dockger-gui", application=app)
         self.set_border_width(3)
-        self.set_default_size(400, 200)
+        self.set_default_size(800, 800)
         self.app = app
 
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
 
+        self.container_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
+
         # Containers
-        self.container_page = Gtk.ListBox()
-        self.container_page.set_border_width(10)
-        self.container_page.set_selection_mode(Gtk.SelectionMode.NONE)
+        self.container_listbox = Gtk.ListBox()
+        self.container_listbox.set_border_width(10)
+        self.container_info_listbox = Gtk.ListBox()
         for container in app.containers:
-            row = self.create_row(container, self.on_click_inspect, "inspect")
-            self.container_page.add(row)
+            row = Gtk.ListBoxRow()
+            box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
+
+            row.add(box)
+
+            label = self._create_label("{0} ({1})".format(container.attrs['Config']['Image'], container.name))
+
+            box.pack_start(label, True, True, 0)
+            self.container_listbox.add(row)
+
+        self.container_paned.add1(self.container_listbox)
+        self.container_paned.add2(self.container_info_listbox)
 
         # Images
         self.image_page = Gtk.ListBox()
         self.image_page.set_border_width(10)
         self.image_page.set_selection_mode(Gtk.SelectionMode.NONE)
         for image in app.images:
-            row = self.create_row(image, self.on_click_run, "run")
+            #row = self._create_row(image, self.on_click_run, "run")
+            row = Gtk.ListBoxRow()
+            box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
+
+            row.add(box)
+
+            label = self._create_label(image.tags[0])
+            button = self._create_button("run", image, self.on_click_run)
+
+            box.pack_start(label, True, True, 0)
+            box.pack_start(button, True, True, 0)
             self.image_page.add(row)
 
-        self.notebook.append_page(self.container_page, Gtk.Label("Containers"))
+        self.notebook.append_page(self.container_paned, Gtk.Label("Containers"))
         self.notebook.append_page(self.image_page, Gtk.Label("Images"))
-
-    def create_row(self, docker_component, on_click, button_label):
-        row = Gtk.ListBoxRow()
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
-
-        row.add(box)
-
-        label = self._create_label(docker_component.__str__())
-        button = self._create_button(button_label, docker_component, on_click)
-
-        box.pack_start(label, True, True, 0)
-        box.pack_start(button, True, True, 0)
-
-        return row
 
     def _create_label(self, label_name):
         label = Gtk.Label(label_name)
-        label.set_justify(Gtk.Justification.FILL)
+        label.set_justify(Gtk.Justification.LEFT)
         label.set_line_wrap(True)
-        # FIXME : fix signal for label click
-        label.connect("activate-link", self.on_click_run, label_name)
 
         return label
 

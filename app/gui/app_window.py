@@ -1,7 +1,8 @@
 import gi.repository.Gtk as Gtk
-import json
+import docker
 import sys
 from src import docker_commands
+from . docker_labels import ContainerLabel
 # from gi import require_version
 # require_version("GTK", "3.0")
 from . inspect_window import InspectWindow
@@ -26,12 +27,12 @@ class Window(Gtk.ApplicationWindow):
         self.container_info_listbox = Gtk.ListBox()
         for container in app.containers:
             row = Gtk.ListBoxRow()
-            #row.connect("row-selected", self.on_click_inspect, container)
             box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
 
             row.add(box)
 
-            label = self._create_label("{0} ({1})".format(container.attrs['Config']['Image'], container.name))
+            # label = self._create_label("{0} ({1})".format(container.attrs['Config']['Image'], container.name))
+            label = ContainerLabel("{0} ({1})".format(container.attrs['Config']['Image'], container.name), container)
 
             box.pack_start(label, True, True, 0)
             self.container_listbox.add(row)
@@ -75,8 +76,9 @@ class Window(Gtk.ApplicationWindow):
     def on_click_inspect(self, listbox, container):
         row = listbox.get_selected_row()
         label = row.get_child().get_children()[0]
+        container = label.get_docker_container()
         print(label.get_label())
-        # TODO : create custom Gtk.Label with container id.
+        print(container.id)
         container_data = docker_commands.inspect(container)
 
         inspect_window = InspectWindow(container_data)

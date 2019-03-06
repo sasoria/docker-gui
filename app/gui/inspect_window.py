@@ -7,15 +7,16 @@ class InspectWindow(Gtk.Window):
         self.set_border_width(3)
         self.set_default_size(800, 400)
         self.listbox = Gtk.ListBox()
-        self.scrolled_window = Gtk.ScrolledWindow()
+        #self.scrolled_window = Gtk.ScrolledWindow()
 
         for label in self._create_labels(data):
             self.listbox.add(label)
 
-        self.viewport.add(self.listbox)
+        #self.viewport.add(self.listbox)
         #self.listbox.add(self.sw)
-        self.scrolled_window.add.with_viewport(self.listbox)
-        self.add(self.sw)
+        #self.scrolled_window.add.with_viewport(self.listbox)
+        #self.add(self.sw)
+        self.add(self.listbox)
 
     def _create_labels(self, data):
         labels = []

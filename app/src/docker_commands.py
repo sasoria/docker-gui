@@ -1,6 +1,7 @@
 import subprocess
 import docker
 import sys
+from requests.exceptions import ConnectionError
 
 
 def execute_cmd(cmd):
@@ -34,6 +35,8 @@ def run(docker_client, image):
         print("Error : image not found")
     except docker.errors.APIError:
         print("Error : server returned an api error")
+    except ConnectionError as error:
+        print(error)
 
     return container
 
@@ -63,8 +66,8 @@ def list_images(docker_client):
         images = docker_client.images.list()
     except docker.errors.APIError:
         print("Error : server returned an api Error")
-    except ConnectionError:
-        print("test")
+    except ConnectionError as error:
+        print(error)
 
     return images
 
@@ -79,6 +82,8 @@ def list_containers(docker_client):
         containers = docker_client.containers.list()
     except docker.errors.APIError:
         print("Error : server returned an api Error")
+    except ConnectionError as error:
+        print(error)
 
     return containers
 

@@ -56,10 +56,7 @@ def process_args(args, docker_client):
 
 def main():
     args = read_args()
-    try:
-        docker_client = docker.from_env()
-    except ConnectionError:
-        print("Error : cannot connect to docker, is it installed?")
+    docker_client = docker.from_env()
     dockers = process_args(args, docker_client)
     _gui = __import__("gui.app_window", fromlist=['app_window'])
     _gui.run(dockers, docker_client)

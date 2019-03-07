@@ -1,7 +1,7 @@
 import gi.repository.Gtk as Gtk
 import docker
 import sys
-from . docker_listboxes import ContainerListBox, ImageListBox
+from . docker_listboxes import ContainerListBox, ContainerInfoListBox, ImageListBox
 from src import docker_commands
 # from gi import require_version
 # require_version("GTK", "3.0")
@@ -22,8 +22,9 @@ class Window(Gtk.ApplicationWindow):
 
         # Containers
         self.container_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
-        self.container_info_listbox = Gtk.ListBox()
+        self.container_info_listbox = ContainerInfoListBox()
         self.container_label_listbox = ContainerListBox(self.container_info_listbox, self.container_paned)
+
         for container in app.containers:
             row = self.container_label_listbox.add_row(container)
             self.container_label_listbox.add(row)
@@ -33,6 +34,7 @@ class Window(Gtk.ApplicationWindow):
 
         # Images
         self.image_page = ImageListBox(self.app.docker_client, self)
+
         for image in app.images:
             row = self.image_page.add_row(image)
             self.image_page.add(row)

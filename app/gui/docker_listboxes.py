@@ -24,17 +24,18 @@ class ContainerListBox(Gtk.ListBox):
         row = listbox.get_selected_row()
         label = row.get_child().get_children()[0]
         container = label.get_docker_container()
-        print(label.get_label())
-        print(container.id)
-        container_data = docker_commands.inspect(container)
 
-        # TODO : create a seperate InfoListBox()
-        self.remove_info_listbox_rows()
-        self.create_info_listbox_rows(container)
-        self.update_info_listbox()
+        self.info_listbox.remove_info_listbox_rows()
+        self.info_listbox.create_info_listbox_rows(container)
+        self.info_listbox.update_info_listbox()
 
     def get_docker_container(self):
         return self.docker_container
+
+
+class ContainerInfoListBox(Gtk.ListBox):
+    def __init__(self):
+        Gtk.ListBox.__init__(self)
 
     def create_info_listbox_rows(self, container):
         """
@@ -56,25 +57,24 @@ class ContainerListBox(Gtk.ListBox):
         }
 
         # add header
-        self.info_listbox.add(docker_commands.inspect(container)['Config']['Image'])
+        self.add(Gtk.Label(docker_commands.inspect(container)['Config']['Image']))
 
         for key, value in container_info.items():
-            self.info_listbox.add(Gtk.Label("{0} : {1}".format(key, value), xalign=0))
+            self.add(Gtk.Label("{0} : {1}".format(key, value), xalign=0))
 
     def remove_info_listbox_rows(self):
         """
-        Clears the info_listbox for all listbox rows.
+        Clears the info_listbox for all listbox rows if there is a header row.
         """
-        if self.info_listbox.get_row_at_index(0):
-            for row in self.info_listbox:
+        if self.get_row_at_index(0):
+            for row in self:
                 row.destroy()
 
     def update_info_listbox(self):
         """
         Redraws the widget in info_listbox, the right side pane with information of each container.
         """
-        self.info_listbox.show_all()
-
+        self.show_all()
 
 
 class ImageListBox(Gtk.ListBox):

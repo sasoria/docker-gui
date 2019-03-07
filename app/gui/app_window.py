@@ -17,6 +17,9 @@ class Window(Gtk.ApplicationWindow):
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
 
+        # TODO : make notebook scrollable?
+        # <gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkNotebook>
+
         # Containers
         self.container_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.container_info_listbox = Gtk.ListBox()

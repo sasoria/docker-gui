@@ -62,6 +62,8 @@ def list_images(docker_client):
     :param docker_client: docker sdk client
     :return: a list of images
     """
+    images = None
+
     try:
         images = docker_client.images.list()
     except docker.errors.APIError:

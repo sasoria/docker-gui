@@ -38,6 +38,7 @@ def run(docker_client, image):
         print("Error : server returned an api error")
     except ConnectionError as error:
         print(error)
+        print("Error: no connection to docker, please run it")
         sys.exit(1)
 
     return container
@@ -71,6 +72,7 @@ def list_images(docker_client):
         print("Error : server returned an api Error")
     except ConnectionError as error:
         print(error)
+        print("Error: no connection to docker, please run it")
         sys.exit(1)
 
     return images
@@ -89,6 +91,7 @@ def list_containers(docker_client):
         print("Error : server returned an api Error")
     except ConnectionError as error:
         print(error)
+        print("Error: no connection to docker, please run it")
         sys.exit(1)
 
     return containers

@@ -6,6 +6,11 @@ A lightweight graphical interface for docker in GTK 3. This app displays docker 
 $ python app/__main__.py
 ```
 
+## Requiremnts
+```
+$ pip install docker
+```
+
 ## Notes
 This app requires docker to be managed as a non-root user. See [Post-installation steps for Linux
 ](https://docs.docker.com/install/linux/linux-postinstall/) for further details.

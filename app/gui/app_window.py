@@ -29,9 +29,9 @@ class Window(Gtk.ApplicationWindow):
         self.container_paned.add2(self.container_info_listbox)
 
         # Images
-        self.image_page = ImageListBox()
+        self.image_page = ImageListBox(self.app.docker_client, self)
         for image in app.images:
-            row = ImageListBox.add_row(image)
+            row = self.image_page.add_row(image)
             self.image_page.add(row)
 
         self.notebook.append_page(self.container_paned, Gtk.Label("Containers"))

@@ -63,6 +63,8 @@ def list_images(docker_client):
         images = docker_client.images.list()
     except docker.errors.APIError:
         print("Error : server returned an api Error")
+    except ConnectionError:
+        print("test")
 
     return images
 

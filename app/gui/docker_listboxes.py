@@ -28,14 +28,19 @@ class ContainerListBox(Gtk.ListBox):
         print(container.id)
         container_data = docker_commands.inspect(container)
 
-        # remove old row
-        if self.info_listbox.get_row_at_index(0):
-            for row in self.info_listbox:
-                row.destroy()
+        # TODO : create a seperate InfoListBox()
+        self.remove_info_listbox_rows()
+        self.create_info_listbox_rows(container)
+        self.update_info_listbox()
 
-        # add header
-        self.info_listbox.add(Gtk.Label(container_data['Config']['Image']))
+    def get_docker_container(self):
+        return self.docker_container
 
+    def create_info_listbox_rows(self, container):
+        """
+        Creates listbox rows with information about the container
+        :param container: docker container
+        """
         container_info = {
             'id': docker_commands.inspect(container)['Id'],
             'created': docker_commands.inspect(container)['Created'],
@@ -50,15 +55,26 @@ class ContainerListBox(Gtk.ListBox):
             'ipaddress': docker_commands.inspect(container)['NetworkSettings']['IPAddress']
         }
 
+        # add header
+        self.info_listbox.add(docker_commands.inspect(container)['Config']['Image'])
+
         for key, value in container_info.items():
             self.info_listbox.add(Gtk.Label("{0} : {1}".format(key, value), xalign=0))
 
+    def remove_info_listbox_rows(self):
+        """
+        Clears the info_listbox for all listbox rows.
+        """
+        if self.info_listbox.get_row_at_index(0):
+            for row in self.info_listbox:
+                row.destroy()
 
-        # update GtkWidget
+    def update_info_listbox(self):
+        """
+        Redraws the widget in info_listbox, the right side pane with information of each container.
+        """
         self.info_listbox.show_all()
 
-    def get_docker_container(self):
-        return self.docker_container
 
 
 class ImageListBox(Gtk.ListBox):

@@ -48,10 +48,12 @@ def process_args(args, docker_client):
     if args.v:
         print("verbose mode on")
 
-    return {
+    dockers = {
         'images': docker_commands.list_images(docker_client),
         'containers': docker_commands.list_containers(docker_client)
     }
+
+    return dockers
 
 
 def main():

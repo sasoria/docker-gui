@@ -23,7 +23,7 @@ class Window(Gtk.ApplicationWindow):
         # Containers
         self.container_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.container_info_listbox = Gtk.ListBox()
-        self.container_label_listbox = ContainerListBox(self.container_info_listbox)
+        self.container_label_listbox = ContainerListBox(self.container_info_listbox, self.container_paned)
         for container in app.containers:
             row = self.container_label_listbox.add_row(container)
             self.container_label_listbox.add(row)

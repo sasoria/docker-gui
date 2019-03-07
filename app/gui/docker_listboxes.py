@@ -4,11 +4,12 @@ from src import docker_commands
 
 
 class ContainerListBox(Gtk.ListBox):
-    def __init__(self, info_listbox):
+    def __init__(self, info_listbox, paned):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
         self.connect("row-activated", self.on_click_inspect)
         self.info_listbox = info_listbox
+        self.paned = paned
 
     def add_row(self, container):
         row = Gtk.ListBoxRow()
@@ -27,10 +28,33 @@ class ContainerListBox(Gtk.ListBox):
         print(container.id)
         container_data = docker_commands.inspect(container)
 
-        b = Gtk.Button("test")
-        # TODO : clea1r pane 2 before adding.
+        # remove old row
+        if self.info_listbox.get_row_at_index(0):
+            for row in self.info_listbox:
+                row.destroy()
+
+        # add header
         self.info_listbox.add(Gtk.Label(container_data['Config']['Image']))
-        # Updates GtkWidget
+
+        container_info = {
+            'id': docker_commands.inspect(container)['Id'],
+            'created': docker_commands.inspect(container)['Created'],
+            'path': docker_commands.inspect(container)['Path'],
+            'status': docker_commands.inspect(container)['State']['Status'],
+            'name': docker_commands.inspect(container)['Name'],
+            'mounts': docker_commands.inspect(container)['Mounts'],
+            'user': docker_commands.inspect(container)['Config']['User'],
+            'hostname': docker_commands.inspect(container)['Config']['Hostname'],
+            'domainname': docker_commands.inspect(container)['Config']['Domainname'],
+            'volumes': docker_commands.inspect(container)['Config']['Volumes'],
+            'ipaddress': docker_commands.inspect(container)['NetworkSettings']['IPAddress']
+        }
+
+        for key, value in container_info.items():
+            self.info_listbox.add(Gtk.Label("{0} : {1}".format(key, value), xalign=0))
+
+
+        # update GtkWidget
         self.info_listbox.show_all()
 
     def get_docker_container(self):

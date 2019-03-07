@@ -32,6 +32,9 @@ class ContainerListBox(Gtk.ListBox):
     def get_docker_container(self):
         return self.docker_container
 
+    def update_container_listbox(self):
+        self.show_all()
+
 
 class ContainerInfoListBox(Gtk.ListBox):
     def __init__(self):
@@ -78,12 +81,13 @@ class ContainerInfoListBox(Gtk.ListBox):
 
 
 class ImageListBox(Gtk.ListBox):
-    def __init__(self, docker_client, window):
+    def __init__(self, docker_client, window, container_label_listbox):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
         self.set_selection_mode(Gtk.SelectionMode.NONE)
         self.docker_client = docker_client
         self.window = window
+        self.container_label_listbox = container_label_listbox
 
     def add_row(self, image):
         row = Gtk.ListBoxRow()
@@ -102,7 +106,7 @@ class ImageListBox(Gtk.ListBox):
 
     def on_click_run(self, widget, image):
         image_tag = image.tags[0]
-        docker_commands.run(self.docker_client, image_tag)
+        container = docker_commands.run(self.docker_client, image_tag)
         # FIXME : throws <TypeError: could not convert value for property `transient_for'
         # from ImageListBox to GtkWindow>. Possiply beacuse it lacks access to a Gtk.Window
         dialog = Gtk.MessageDialog(self.window,
@@ -115,4 +119,9 @@ class ImageListBox(Gtk.ListBox):
         dialog.destroy()
 
         # FIXME : refresh and add container to container page (1?) need access too container_listbox
-        # self.show_all()
+        # Code below is not updating the container listbox
+        print(container)
+        self.container_label_listbox.add_row(container)
+        self.container_label_listbox.update_container_listbox()
+
+

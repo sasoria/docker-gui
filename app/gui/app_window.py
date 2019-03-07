@@ -33,7 +33,7 @@ class Window(Gtk.ApplicationWindow):
         self.container_paned.add2(self.container_info_listbox)
 
         # Images
-        self.image_page = ImageListBox(self.app.docker_client, self)
+        self.image_page = ImageListBox(self.app.docker_client, self, self.container_label_listbox)
 
         for image in app.images:
             row = self.image_page.add_row(image)

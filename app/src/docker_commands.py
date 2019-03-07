@@ -27,6 +27,7 @@ def run(docker_client, image):
     :param image: docker image
     :return: container created from the image
     """
+    container = None
     try:
         container = docker_client.containers.run(image, detach=True)
     except docker.errors.ContainerError:
@@ -37,6 +38,7 @@ def run(docker_client, image):
         print("Error : server returned an api error")
     except ConnectionError as error:
         print(error)
+        sys.exit(1)
 
     return container
 
@@ -63,13 +65,13 @@ def list_images(docker_client):
     :return: a list of images
     """
     images = None
-
     try:
         images = docker_client.images.list()
     except docker.errors.APIError:
         print("Error : server returned an api Error")
     except ConnectionError as error:
         print(error)
+        sys.exit(1)
 
     return images
 
@@ -80,12 +82,14 @@ def list_containers(docker_client):
     :param docker_client: docker sdk client
     :return: a list of containers
     """
+    containers = None
     try:
         containers = docker_client.containers.list()
     except docker.errors.APIError:
         print("Error : server returned an api Error")
     except ConnectionError as error:
         print(error)
+        sys.exit(1)
 
     return containers
 

@@ -84,9 +84,6 @@ class ContainerInfoListBox(Gtk.ListBox):
             'ipaddress': docker_commands.inspect(container)['NetworkSettings']['IPAddress']
         }
 
-        # add header
-        self.add(Gtk.Label(docker_commands.inspect(container)['Config']['Image']))
-
         for key, value in container_info.items():
             self.add(Gtk.Label("{0} : {1}".format(key, value), xalign=0))
 

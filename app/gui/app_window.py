@@ -14,10 +14,10 @@ class Window(Gtk.ApplicationWindow):
         self.set_default_size(800, 800)
         self.app = app
 
+        # Notebook
+        # TODO : make notebook scrollable
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
-
-        # TODO : make notebook scrollable?
 
         # Containers
         self.container_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
@@ -30,7 +30,9 @@ class Window(Gtk.ApplicationWindow):
         self.container_paned.add1(self.container_labelbox)
         self.container_paned.add2(self.container_infobox)
 
-        # Images
+        # Images #
+        # TODO : add reverse dockerfile_from_image
+        # TODO : add kill button
         self.image_page = ImageListBox(self.app.docker_client, self, self.container_labelbox)
 
         for image in app.images:

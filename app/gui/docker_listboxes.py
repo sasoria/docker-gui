@@ -37,11 +37,14 @@ class ContainerListBox(Gtk.ListBox):
         return self.docker_container
 
     def update_container_listbox(self):
+        """
+        Displays any GtkWidget added to this.
+        """
         self.show_all()
 
     def refresh_containers(self):
         """
-        Runs docker list_containers and updates this GtkGadget.
+        Runs docker list_containers and updates this GtkWidget.
         """
         for container in docker_commands.list_containers(self.docker_client): # FIXME add docker client to this
             self.add_row(container)
@@ -50,7 +53,7 @@ class ContainerListBox(Gtk.ListBox):
 
     def clear_containers(self):
         """
-        Removes all container labels from this GtkGadget.
+        Removes all container labels from this GtkWidget.
         """
         for row in self:
             self.remove(row)

@@ -53,7 +53,7 @@ class ContainerListBox(Gtk.ListBox):
 
     def clear_containers(self):
         """
-        Removes all container labels from this GtkWidget.
+        Removes all container labels from this GtkWidget and updates this GtkWidget.
         """
         for row in self:
             self.remove(row)

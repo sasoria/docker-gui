@@ -4,11 +4,12 @@ from src import docker_commands
 
 
 class ContainerListBox(Gtk.ListBox):
-    def __init__(self, info_listbox, paned):
+    def __init__(self, info_listbox, paned, docker_client):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
         self.connect("row-activated", self.on_click_inspect)
         self.info_listbox = info_listbox
+        self.docker_client = docker_client
         self.paned = paned
 
     def add_row(self, container):
@@ -40,6 +41,8 @@ class ContainerListBox(Gtk.ListBox):
         """
         for container in docker_commands.list_containers(self.docker_client): # FIXME add docker client to this
             self.add_row(container)
+
+        self.update_container_listbox()
 
     def clear_containers(self):
         """
@@ -120,11 +123,10 @@ class ImageListBox(Gtk.ListBox):
 
     def on_click_run(self, widget, image):
         image_tag = image.tags[0]
-        container = docker_commands.run(self.docker_client, image_tag)
+        docker_commands.run(self.docker_client, image_tag)
 
-        self._run_dialog("{0} is running".format(image_tag))
+        self._run_dialog("{0} is running with container id: {1}".format(image_tag))
 
-        # FIXME : container label should only show it it is stil running. refres docker ps?
         self.container_labelbox.clear_containers()
         self.container_labelbox.refresh_containers()
 

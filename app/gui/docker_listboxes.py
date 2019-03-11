@@ -121,7 +121,7 @@ class ImageListBox(Gtk.ListBox):
         # FIXME : refresh and add container to container page (1?) need access too container_listbox
         # Code below is not updating the container listbox
         print(container)
-        self.container_label_listbox.add(ContainerLabel(container)) # add box etc from pane1
+        self.container_label_listbox.add_row(container) # add box etc from pane1
         # Page1 show all? pane showall?
         self.container_label_listbox.update_container_listbox()
 

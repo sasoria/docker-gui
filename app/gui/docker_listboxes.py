@@ -20,9 +20,8 @@ class ContainerListBox(Gtk.ListBox):
 
         self.add(row)
 
-    def on_click_inspect(self, listbox, container):
-        row = listbox.get_selected_row()
-        label = row.get_child().get_children()[0]
+    def on_click_inspect(self, listbox, listbox_row):
+        label = listbox_row.get_child().get_children()[0]
         container = label.get_docker_container()
 
         self.info_listbox.remove_info_listbox_rows()

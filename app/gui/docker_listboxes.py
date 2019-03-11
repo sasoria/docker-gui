@@ -14,12 +14,16 @@ class ContainerListBox(Gtk.ListBox):
 
     def add_row(self, container):
         row = Gtk.ListBoxRow()
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
-        label = ContainerLabel(container)
-        box.pack_start(label, True, True, 0)
+        box = self._create_box(ContainerLabel(container))
         row.add(box)
 
         self.add(row)
+
+    def _create_box(self, label):
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
+        box.pack_start(label, True, True, 0)
+
+        return box
 
     def on_click_inspect(self, listbox, listbox_row):
         label = listbox_row.get_child().get_children()[0]
@@ -121,6 +125,9 @@ class ImageListBox(Gtk.ListBox):
 
         self.add(row)
 
+    def _create_box(self):
+        pass
+
     def on_click_run(self, widget, image):
         image_tag = image.tags[0]
         docker_commands.run(self.docker_client, image_tag)
@@ -134,5 +141,3 @@ class ImageListBox(Gtk.ListBox):
         dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)
         dialog.run()
         dialog.destroy()
-
-

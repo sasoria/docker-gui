@@ -124,8 +124,8 @@ class ImageListBox(Gtk.ListBox):
     def on_click_run(self, widget, image):
         image_tag = image.tags[0]
         docker_commands.run(self.docker_client, image_tag)
-
-        self._run_dialog("{0} is running with container id: {1}".format(image_tag))
+        message = "{0} is running".format(image_tag)
+        self._run_dialog(message)
 
         self.container_labelbox.clear_containers()
         self.container_labelbox.refresh_containers()

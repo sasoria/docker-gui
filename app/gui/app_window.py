@@ -21,17 +21,17 @@ class Window(Gtk.ApplicationWindow):
 
         # Containers
         self.container_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
-        self.container_info_listbox = ContainerInfoListBox()
-        self.container_label_listbox = ContainerListBox(self.container_info_listbox, self.container_paned)
+        self.container_infobox = ContainerInfoListBox()
+        self.container_labelbox = ContainerListBox(self.container_infobox, self.container_paned)
 
         for container in app.containers:
-            self.container_label_listbox.add_row(container)
+            self.container_labelbox.add_row(container)
 
-        self.container_paned.add1(self.container_label_listbox)
-        self.container_paned.add2(self.container_info_listbox)
+        self.container_paned.add1(self.container_labelbox)
+        self.container_paned.add2(self.container_infobox)
 
         # Images
-        self.image_page = ImageListBox(self.app.docker_client, self, self.container_label_listbox)
+        self.image_page = ImageListBox(self.app.docker_client, self, self.container_labelbox)
 
         for image in app.images:
             self.image_page.add_row(image)

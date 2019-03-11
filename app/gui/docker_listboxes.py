@@ -81,13 +81,13 @@ class ContainerInfoListBox(Gtk.ListBox):
 
 
 class ImageListBox(Gtk.ListBox):
-    def __init__(self, docker_client, window, container_label_listbox):
+    def __init__(self, docker_client, window, container_labelbox):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
         self.set_selection_mode(Gtk.SelectionMode.NONE)
         self.docker_client = docker_client
         self.window = window
-        self.container_label_listbox = container_label_listbox
+        self.container_labelbox = container_labelbox
 
     def add_row(self, image):
         row = Gtk.ListBoxRow()
@@ -109,14 +109,10 @@ class ImageListBox(Gtk.ListBox):
 
         self._run_dialog("{0} is running".format(image_tag))
 
+        # FIXME : container label should only show it it is stil running. refres docker ps?
+        self.container_labelbox.add_row(container)
+        self.container_labelbox.update_container_listbox()
 
-        # FIXME : refresh and add container to container page (1?) need access too container_listbox
-        # Code below is not updating the container listbox
-        print(container)
-
-        self.container_label_listbox.add_row(container) # add box etc from pane1
-        # Page1 show all? pane showall?
-        self.container_label_listbox.update_container_listbox()
 
     def _run_dialog(self, message):
         dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)

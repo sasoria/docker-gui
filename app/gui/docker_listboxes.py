@@ -34,6 +34,22 @@ class ContainerListBox(Gtk.ListBox):
     def update_container_listbox(self):
         self.show_all()
 
+    def refresh_containers(self):
+        """
+        Runs docker list_containers and updates this GtkGadget.
+        """
+        for container in docker_commands.list_containers(self.docker_client): # FIXME add docker client to this
+            self.add_row(container)
+
+    def clear_containers(self):
+        """
+        Removes all container labels from this GtkGadget.
+        """
+        for row in self:
+            self.remove(row)
+
+        self.update_container_listbox()
+
 
 class ContainerInfoListBox(Gtk.ListBox):
     def __init__(self):
@@ -109,9 +125,8 @@ class ImageListBox(Gtk.ListBox):
         self._run_dialog("{0} is running".format(image_tag))
 
         # FIXME : container label should only show it it is stil running. refres docker ps?
-        self.container_labelbox.add_row(container)
-        self.container_labelbox.update_container_listbox()
-
+        self.container_labelbox.clear_containers()
+        self.container_labelbox.refresh_containers()
 
     def _run_dialog(self, message):
         dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)

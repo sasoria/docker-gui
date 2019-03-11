@@ -20,6 +20,7 @@ def execute_cmd(cmd):
     return out.decode('utf-8')
 
 
+# TODO : add **kwargs for window to be use in a display message.
 def run(docker_client, image):
     """
     Runs a docker image as a container.
@@ -27,6 +28,7 @@ def run(docker_client, image):
     :param image: docker image
     :return: container created from the image
     """
+
     container = None
     try:
         container = docker_client.containers.run(image, detach=True)
@@ -44,6 +46,7 @@ def run(docker_client, image):
     return container
 
 
+# TODO : add **kwargs for window to be use in a display message.
 def inspect(container):
     """
     Inspects a docker container. This is not equivalent to <docker inspect>,
@@ -59,6 +62,7 @@ def inspect(container):
     return container.attrs
 
 
+# TODO : add **kwargs for window to be use in a display message.
 def list_images(docker_client):
     """
     Lists docker images.
@@ -78,6 +82,7 @@ def list_images(docker_client):
     return images
 
 
+# TODO : add **kwargs for window to be use in a display message.
 def list_containers(docker_client):
     """
     Lists docker containers.
@@ -97,6 +102,7 @@ def list_containers(docker_client):
     return containers
 
 
+# TODO : add **kwargs for window to be use in a display message.
 def kill(container):
     try:
         container.kill()

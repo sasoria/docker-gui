@@ -25,8 +25,7 @@ class Window(Gtk.ApplicationWindow):
         self.container_label_listbox = ContainerListBox(self.container_info_listbox, self.container_paned)
 
         for container in app.containers:
-            row = self.container_label_listbox.add_row(container)
-            self.container_label_listbox.add(row)
+            self.container_label_listbox.add_row(container)
 
         self.container_paned.add1(self.container_label_listbox)
         self.container_paned.add2(self.container_info_listbox)
@@ -35,8 +34,7 @@ class Window(Gtk.ApplicationWindow):
         self.image_page = ImageListBox(self.app.docker_client, self, self.container_label_listbox)
 
         for image in app.images:
-            row = self.image_page.add_row(image)
-            self.image_page.add(row)
+            self.image_page.add_row(image)
 
         self.notebook.append_page(self.container_paned, Gtk.Label("Containers"))
         self.notebook.append_page(self.image_page, Gtk.Label("Images"))

@@ -18,7 +18,7 @@ class ContainerListBox(Gtk.ListBox):
         box.pack_start(label, True, True, 0)
         row.add(box)
 
-        return row
+        self.add(row)
 
     def on_click_inspect(self, listbox, container):
         row = listbox.get_selected_row()
@@ -94,7 +94,6 @@ class ImageListBox(Gtk.ListBox):
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
 
         row.add(box)
-
         label = ImageLabel(image)
         button = Gtk.Button.new_with_label("run")
         button.connect("clicked", self.on_click_run, image)
@@ -102,25 +101,26 @@ class ImageListBox(Gtk.ListBox):
         box.pack_start(label, True, True, 0)
         box.pack_start(button, True, True, 0)
 
-        return row
+        self.add(row)
 
     def on_click_run(self, widget, image):
         image_tag = image.tags[0]
         container = docker_commands.run(self.docker_client, image_tag)
 
-        dialog = self._create_dialog("{0} is running".format(image_tag))
-        dialog.run()
-        dialog.destroy()
+        self._run_dialog("{0} is running".format(image_tag))
+
 
         # FIXME : refresh and add container to container page (1?) need access too container_listbox
         # Code below is not updating the container listbox
         print(container)
+
         self.container_label_listbox.add_row(container) # add box etc from pane1
         # Page1 show all? pane showall?
         self.container_label_listbox.update_container_listbox()
 
-    def _create_dialog(self, message):
-        return Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)
-
+    def _run_dialog(self, message):
+        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)
+        dialog.run()
+        dialog.destroy()
 
 

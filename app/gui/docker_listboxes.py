@@ -174,6 +174,7 @@ class ImageListBox(Gtk.ListBox):
 class ImageInfoListBox(Gtk.ListBox):
     def __init__(self):
         Gtk.ListBox.__init__(self)
+        self.set_selection_mode(Gtk.SelectionMode.NONE)
 
     def create_rows(self, image):
         """
@@ -187,7 +188,7 @@ class ImageInfoListBox(Gtk.ListBox):
 
     def remove_rows(self):
         """
-        Clears the info_listbox for all listbox rows if there is a header row.
+        Clears the info_listbox for all listbox rows if it is not empty.
         """
         if self.get_row_at_index(0):
             for row in self:

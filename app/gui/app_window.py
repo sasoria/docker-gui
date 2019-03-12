@@ -15,7 +15,6 @@ class Window(Gtk.ApplicationWindow):
         self.app = app
 
         # Notebook
-        # TODO : make notebook scrollable
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
 
@@ -38,8 +37,11 @@ class Window(Gtk.ApplicationWindow):
         for image in app.images:
             self.image_labelbox.add_row(image)
 
+        self.scrollable_image_info = Gtk.ScrolledWindow()
+        self.scrollable_image_info.add_with_viewport(self.image_infobox)
+
         self.image_page.add1(self.image_labelbox)
-        self.image_page.add2(self.image_infobox)
+        self.image_page.add2(self.scrollable_image_info)
 
         # add pages
         self.notebook.append_page(self.container_paned, Gtk.Label("Containers"))

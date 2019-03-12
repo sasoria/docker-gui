@@ -24,6 +24,9 @@ class ImageLabel(Gtk.Label):
         self.docker_image = docker_image
         self.text = self.docker_image.tags[0]
         self.set_text(self.text)
-        self.set_justify(Gtk.Justification.LEFT)
-        self.set_line_wrap(True)
+        # self.set_justify(Gtk.Justification.LEFT)
+        # self.set_line_wrap(True)
+
+    def get_docker_image(self):
+        return self.docker_image
 

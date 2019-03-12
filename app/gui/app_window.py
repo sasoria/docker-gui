@@ -1,7 +1,7 @@
 import gi.repository.Gtk as Gtk
 import docker
 import sys
-from . docker_listboxes import ContainerListBox, ContainerInfoListBox, ImageListBox
+from . docker_listboxes import ContainerListBox, ContainerInfoListBox, ImageListBox, ImageInfoListBox
 from src import docker_commands
 # from gi import require_version
 # require_version("GTK", "3.0")
@@ -30,13 +30,18 @@ class Window(Gtk.ApplicationWindow):
         self.container_paned.add1(self.container_labelbox)
         self.container_paned.add2(self.container_infobox)
 
-        # Images #
-        # TODO : add reverse dockerfile_from_image
-        self.image_page = ImageListBox(self.app.docker_client, self, self.container_labelbox)
+        # Images
+        self.image_page = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
+        self.image_infobox = ImageInfoListBox()
+        self.image_labelbox = ImageListBox(self.app.docker_client, self, self.container_labelbox, self.image_infobox)
 
         for image in app.images:
-            self.image_page.add_row(image)
+            self.image_labelbox.add_row(image)
 
+        self.image_page.add1(self.image_labelbox)
+        self.image_page.add2(self.image_infobox)
+
+        # add pages
         self.notebook.append_page(self.container_paned, Gtk.Label("Containers"))
         self.notebook.append_page(self.image_page, Gtk.Label("Images"))
 

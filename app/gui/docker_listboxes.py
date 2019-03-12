@@ -47,9 +47,9 @@ class ContainerListBox(Gtk.ListBox):
         label = listbox_row.get_child().get_children()[0]
         container = label.get_docker_container()
 
-        self.info_listbox.remove_info_listbox_rows()
-        self.info_listbox.create_info_listbox_rows(container)
-        self.info_listbox.update_info_listbox()
+        self.info_listbox.remove_rows()
+        self.info_listbox.create_rows(container)
+        self.info_listbox.update_listbox()
 
     def get_docker_container(self):
         return self.docker_container
@@ -83,7 +83,7 @@ class ContainerInfoListBox(Gtk.ListBox):
     def __init__(self):
         Gtk.ListBox.__init__(self)
 
-    def create_info_listbox_rows(self, container):
+    def create_rows(self, container):
         """
         Creates listbox rows with information about the container
         :param container: docker container
@@ -105,7 +105,7 @@ class ContainerInfoListBox(Gtk.ListBox):
         for key, value in container_info.items():
             self.add(Gtk.Label("{0} : {1}".format(key, value), xalign=0))
 
-    def remove_info_listbox_rows(self):
+    def remove_rows(self):
         """
         Clears the info_listbox for all listbox rows if there is a header row.
         """
@@ -113,7 +113,7 @@ class ContainerInfoListBox(Gtk.ListBox):
             for row in self:
                 row.destroy()
 
-    def update_info_listbox(self):
+    def update_listbox(self):
         """
         Redraws the widget in info_listbox, the right side pane with information of each container.
         """
@@ -121,13 +121,15 @@ class ContainerInfoListBox(Gtk.ListBox):
 
 
 class ImageListBox(Gtk.ListBox):
-    def __init__(self, docker_client, window, container_labelbox):
+    def __init__(self, docker_client, window, container_labelbox, image_infobox):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
-        self.set_selection_mode(Gtk.SelectionMode.NONE)
+        # self.set_selection_mode(Gtk.SelectionMode.NONE)
         self.docker_client = docker_client
         self.window = window
         self.container_labelbox = container_labelbox
+        self.image_infobox = image_infobox
+        self.connect("row-activated", self.on_click_show_dockerfile)
 
     def add_row(self, image):
         row = Gtk.ListBoxRow()
@@ -159,3 +161,41 @@ class ImageListBox(Gtk.ListBox):
         dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)
         dialog.run()
         dialog.destroy()
+
+    def on_click_show_dockerfile(self, listbox, listbox_row):
+        label = listbox_row.get_child().get_children()[0]
+        image = label.get_docker_image()
+
+        self.image_infobox.remove_rows()
+        self.image_infobox.create_rows(image)
+        self.image_infobox.update_listbox()
+
+
+class ImageInfoListBox(Gtk.ListBox):
+    def __init__(self):
+        Gtk.ListBox.__init__(self)
+
+    def create_rows(self, image):
+        """
+        Creates listbox rows with the dockerfile of the selected image.
+        :param image: docker container
+        """
+        dockerfile = docker_commands.dockerfile_from_image(image)
+
+        for line in dockerfile.splitlines():
+            self.add(Gtk.Label("{0}".format(line), xalign=0))
+
+    def remove_rows(self):
+        """
+        Clears the info_listbox for all listbox rows if there is a header row.
+        """
+        if self.get_row_at_index(0):
+            for row in self:
+                row.destroy()
+
+    def update_listbox(self):
+        """
+        Redraws the widget in info_listbox, the right side pane with the dockerfile.
+        """
+        self.show_all()
+

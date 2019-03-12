@@ -20,6 +20,17 @@ def execute_cmd(cmd):
     return out.decode('utf-8')
 
 
+def dockerfile_from_image(image):
+    """
+    Creates a dockerfile from image.
+    :param image: docker image
+    :return: dockerfile of the specified image.
+    """
+    cmd = "dfimage {0}".format(image.tags[0])
+
+    return execute_cmd(cmd)
+
+
 # TODO : add **kwargs for window to be use in a display message.
 def run(docker_client, image):
     """

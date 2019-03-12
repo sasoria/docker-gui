@@ -7,9 +7,19 @@ $ python app/__main__.py
 ```
 
 ## Requiremnts
+### pip
 ```
 $ pip install docker
 ```
+### npm
+```
+$ npm install meow
+$ npm install dockerode
+``` 
+### [dfimage](https://github.com/52cik/dockerfile-from-image)
+``` 
+$ git clone https://github.com/52cik/dockerfile-from-image.git
+``` 
 
 ## Notes
 This app requires docker to be managed as a non-root user. See [Post-installation steps for Linux

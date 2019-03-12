@@ -34,6 +34,7 @@ class ContainerListBox(Gtk.ListBox):
         docker_commands.kill(container)
         message = "{0} has terminated.".format(container)
         self._kill_dialog(message)
+
         self.clear_containers()
         self.refresh_containers()
 

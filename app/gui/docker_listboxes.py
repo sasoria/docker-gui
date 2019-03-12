@@ -145,9 +145,6 @@ class ImageListBox(Gtk.ListBox):
 
         self.add(row)
 
-    def _create_box(self):
-        pass
-
     def on_click_run(self, widget, image):
         image_tag = image.tags[0]
         docker_commands.run(self.docker_client, image_tag)

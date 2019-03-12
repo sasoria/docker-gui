@@ -32,7 +32,6 @@ class Window(Gtk.ApplicationWindow):
 
         # Images #
         # TODO : add reverse dockerfile_from_image
-        # TODO : add kill button
         self.image_page = ImageListBox(self.app.docker_client, self, self.container_labelbox)
 
         for image in app.images:

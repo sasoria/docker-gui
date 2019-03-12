@@ -1,5 +1,5 @@
 # docker-gui
-A lightweight graphical interface for docker in GTK 3. This app displays docker containers and docker images.
+A lightweight graphical interface for docker in GTK 3. This app displays docker containers and docker images. It also allows users to run images, kill containers and displays information about containers and images. The latter as a dockerfile of the selected image.
 
 ## Run
 ```
@@ -9,7 +9,7 @@ $ python app/__main__.py
 ## Requiremnts
 ### pip
 ```
-$ pip install docker
+$ pip3 install docker
 ```
 ### npm
 ```
@@ -19,7 +19,8 @@ $ npm install dockerode
 ### [dfimage](https://github.com/52cik/dockerfile-from-image)
 ``` 
 $ git clone https://github.com/52cik/dockerfile-from-image.git
-``` 
+```
+Make `bin/dfimage` executable with `chmod 775` and put it in your `PATH`.
 
 ## Notes
 This app requires docker to be managed as a non-root user. See [Post-installation steps for Linux

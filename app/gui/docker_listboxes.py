@@ -21,27 +21,29 @@ class ContainerListBox(Gtk.ListBox):
 
     def _create_box(self, label, container):
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
+        box.pack_start(label, True, True, 0)
+        box.pack_start(self._create_button(container), False, True, 1)
 
+        return box
+
+    def _create_button(self, container):
         kill_button = Gtk.Button.new_with_label("kill")
         kill_button.connect("clicked", self.on_click_kill, container)
 
-        box.pack_start(label, True, True, 0)
-        box.pack_start(kill_button, False, True, 1)
+        return kill_button
 
-        return box
+    def _kill_dialog(self, message):
+        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)
+        dialog.run()
+        dialog.destroy()
 
     def on_click_kill(self, widget, container):
         docker_commands.kill(container)
         message = "{0} has terminated.".format(container)
         self._kill_dialog(message)
 
-        self.clear_containers()
-        self.refresh_containers()
-
-    def _kill_dialog(self, message):
-        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)
-        dialog.run()
-        dialog.destroy()
+        self.clear_labels()
+        self.update_containers()
 
     def on_click_inspect(self, listbox, listbox_row):
         label = listbox_row.get_child().get_children()[0]
@@ -49,34 +51,31 @@ class ContainerListBox(Gtk.ListBox):
 
         self.info_listbox.remove_rows()
         self.info_listbox.create_rows(container)
-        self.info_listbox.update_listbox()
+        self.info_listbox.show_labels()
 
-    def get_docker_container(self):
-        return self.docker_container
-
-    def update_container_listbox(self):
-        """
-        Displays any GtkWidget added to this.
-        """
-        self.show_all()
-
-    def refresh_containers(self):
+    def update_containers(self):
         """
         Runs docker list_containers and updates this GtkWidget.
         """
         for container in docker_commands.list_containers(self.docker_client): # FIXME add docker client to this
             self.add_row(container)
 
-        self.update_container_listbox()
+        self.show_labels()
 
-    def clear_containers(self):
+    def clear_labels(self):
         """
         Removes all container labels from this GtkWidget and updates this GtkWidget.
         """
         for row in self:
             self.remove(row)
 
-        self.update_container_listbox()
+        self.show_labels()
+
+    def show_labels(self):
+        """
+        Displays any new GtkWidgets added to this.
+        """
+        self.show_all()
 
 
 class ContainerInfoListBox(Gtk.ListBox):
@@ -115,7 +114,7 @@ class ContainerInfoListBox(Gtk.ListBox):
             for row in self:
                 row.destroy()
 
-    def update_listbox(self):
+    def show_labels(self):
         """
         Redraws the widget in info_listbox, the right side pane with information of each container.
         """
@@ -135,17 +134,28 @@ class ImageListBox(Gtk.ListBox):
 
     def add_row(self, image):
         row = Gtk.ListBoxRow()
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
-
+        box = self._create_box(ImageLabel(image), image)
         row.add(box)
-        label = ImageLabel(image)
+
+        self.add(row)
+
+    def _create_box(self, label, image):
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
+        box.pack_start(label, True, True, 0)
+        box.pack_start(self._create_button(image), False, True, 0)
+
+        return box
+
+    def _create_button(self, image):
         run_button = Gtk.Button.new_with_label("run")
         run_button.connect("clicked", self.on_click_run, image)
 
-        box.pack_start(label, True, True, 0)
-        box.pack_start(run_button, False, True, 0)
+        return run_button
 
-        self.add(row)
+    def _run_dialog(self, message):
+        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)
+        dialog.run()
+        dialog.destroy()
 
     def on_click_run(self, widget, image):
         image_tag = image.tags[0]
@@ -153,13 +163,8 @@ class ImageListBox(Gtk.ListBox):
         message = "{0} is running".format(image_tag)
         self._run_dialog(message)
 
-        self.container_labelbox.clear_containers()
-        self.container_labelbox.refresh_containers()
-
-    def _run_dialog(self, message):
-        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message)
-        dialog.run()
-        dialog.destroy()
+        self.container_labelbox.clear_labels()
+        self.container_labelbox.update_containers()
 
     def on_click_show_dockerfile(self, listbox, listbox_row):
         label = listbox_row.get_child().get_children()[0]
@@ -167,7 +172,7 @@ class ImageListBox(Gtk.ListBox):
 
         self.image_infobox.remove_rows()
         self.image_infobox.create_rows(image)
-        self.image_infobox.update_listbox()
+        self.image_infobox.show_labels()
 
 
 class ImageInfoListBox(Gtk.ListBox):
@@ -195,7 +200,7 @@ class ImageInfoListBox(Gtk.ListBox):
             for row in self:
                 row.destroy()
 
-    def update_listbox(self):
+    def show_labels(self):
         """
         Redraws the widget in info_listbox, the right side pane with the dockerfile.
         """

@@ -20,7 +20,7 @@ class ContainerListBox(Gtk.ListBox):
         self.add(row)
 
     def _create_box(self, label, container):
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=100)
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
 
         kill_button = Gtk.Button.new_with_label("kill")
         kill_button.connect("clicked", self.on_click_kill, container)
@@ -135,7 +135,7 @@ class ImageListBox(Gtk.ListBox):
 
     def add_row(self, image):
         row = Gtk.ListBoxRow()
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=100)
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=20)
 
         row.add(box)
         label = ImageLabel(image)

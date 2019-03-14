@@ -16,7 +16,6 @@ class ContainerListBox(Gtk.ListBox):
         row = Gtk.ListBoxRow()
         box = self._create_box(ContainerLabel(container), container)
         row.add(box)
-
         self.add(row)
 
     def _create_box(self, label, container):
@@ -136,7 +135,6 @@ class ImageListBox(Gtk.ListBox):
         row = Gtk.ListBoxRow()
         box = self._create_box(ImageLabel(image), image)
         row.add(box)
-
         self.add(row)
 
     def _create_box(self, label, image):

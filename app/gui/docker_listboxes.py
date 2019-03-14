@@ -7,7 +7,6 @@ class ContainerListBox(Gtk.ListBox):
     def __init__(self, info_listbox, window, docker_client):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
-        self.set_margin_left(20)
         self.connect("row-activated", self.on_click_inspect)
         self.info_listbox = info_listbox
         self.docker_client = docker_client
@@ -21,7 +20,7 @@ class ContainerListBox(Gtk.ListBox):
         self.add(row)
 
     def _create_box(self, label, container):
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=200)
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=100)
 
         kill_button = Gtk.Button.new_with_label("kill")
         kill_button.connect("clicked", self.on_click_kill, container)
@@ -127,7 +126,6 @@ class ImageListBox(Gtk.ListBox):
     def __init__(self, docker_client, window, container_labelbox, image_infobox):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
-        self.set_margin_left(20)
         # self.set_selection_mode(Gtk.SelectionMode.NONE)
         self.docker_client = docker_client
         self.window = window

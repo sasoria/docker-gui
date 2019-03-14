@@ -7,6 +7,7 @@ class ContainerListBox(Gtk.ListBox):
     def __init__(self, info_listbox, window, docker_client):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
+        self.set_margin_left(20)
         self.connect("row-activated", self.on_click_inspect)
         self.info_listbox = info_listbox
         self.docker_client = docker_client
@@ -82,6 +83,8 @@ class ContainerListBox(Gtk.ListBox):
 class ContainerInfoListBox(Gtk.ListBox):
     def __init__(self):
         Gtk.ListBox.__init__(self)
+        self.set_margin_left(10)
+        self.set_margin_top(10)
 
     def create_rows(self, container):
         """
@@ -124,6 +127,7 @@ class ImageListBox(Gtk.ListBox):
     def __init__(self, docker_client, window, container_labelbox, image_infobox):
         Gtk.ListBox.__init__(self)
         self.set_border_width(10)
+        self.set_margin_left(20)
         # self.set_selection_mode(Gtk.SelectionMode.NONE)
         self.docker_client = docker_client
         self.window = window
@@ -172,6 +176,8 @@ class ImageInfoListBox(Gtk.ListBox):
     def __init__(self):
         Gtk.ListBox.__init__(self)
         self.set_selection_mode(Gtk.SelectionMode.NONE)
+        self.set_margin_left(10)
+        self.set_margin_top(10)
 
     def create_rows(self, image):
         """

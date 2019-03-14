@@ -53,27 +53,21 @@ class ContainerListBox(Gtk.ListBox):
         self.info_listbox.show_labels()
 
     def update_containers(self):
-        """
-        Runs docker list_containers and updates this GtkWidget.
-        """
+        """ Runs docker list_containers and updates this GtkWidget. """
         for container in docker_commands.list_containers(self.docker_client): # FIXME add docker client to this
             self.add_row(container)
 
         self.show_labels()
 
     def clear_labels(self):
-        """
-        Removes all container labels from this GtkWidget and updates this GtkWidget.
-        """
+        """ Removes all container labels from this GtkWidget and updates this GtkWidget. """
         for row in self:
             self.remove(row)
 
         self.show_labels()
 
     def show_labels(self):
-        """
-        Displays any new GtkWidgets added to this.
-        """
+        """ Displays any new GtkWidgets added to this. """
         self.show_all()
 
 
@@ -106,17 +100,13 @@ class ContainerInfoListBox(Gtk.ListBox):
             self.add(Gtk.Label("{0} : {1}".format(key, value), xalign=0))
 
     def remove_rows(self):
-        """
-        Clears the info_listbox for all listbox rows if there is a header row.
-        """
+        """ Clears the info_listbox for all listbox rows if there is a header row. """
         if self.get_row_at_index(0):
             for row in self:
                 row.destroy()
 
     def show_labels(self):
-        """
-        Redraws the widget in info_listbox, the right side pane with information of each container.
-        """
+        """ Redraws the widget in info_listbox, the right side pane with information of each container. """
         self.show_all()
 
 
@@ -191,16 +181,12 @@ class ImageInfoListBox(Gtk.ListBox):
             self.add(Gtk.Label("{0}".format(line), xalign=0))
 
     def remove_rows(self):
-        """
-        Clears the info_listbox for all listbox rows if it is not empty.
-        """
+        """ Clears the info_listbox for all listbox rows if it is not empty. """
         if self.get_row_at_index(0):
             for row in self:
                 row.destroy()
 
     def show_labels(self):
-        """
-        Redraws the widget in info_listbox, the right side pane with the dockerfile.
-        """
+        """ Redraws the widget in info_listbox, the right side pane with the dockerfile. """
         self.show_all()
 

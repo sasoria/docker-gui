@@ -18,16 +18,16 @@ class Window(Gtk.ApplicationWindow):
         self.notebook = Gtk.Notebook()
         self.add(self.notebook)
 
-        # Containers
-        self.container_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
+        # Container
+        self.container_page = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.container_infobox = ContainerInfoListBox()
         self.container_labelbox = ContainerListBox(self.container_infobox, self, self.app.docker_client)
 
         for container in app.containers:
             self.container_labelbox.add_row(container)
 
-        self.container_paned.add1(self.container_labelbox)
-        self.container_paned.add2(self.container_infobox)
+        self.container_page.add1(self.container_labelbox)
+        self.container_page.add2(self.container_infobox)
 
         # Images
         self.image_page = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
@@ -44,7 +44,7 @@ class Window(Gtk.ApplicationWindow):
         self.image_page.add2(self.scrollable_image_info)
 
         # add pages
-        self.notebook.append_page(self.container_paned, Gtk.Label("Containers"))
+        self.notebook.append_page(self.container_page, Gtk.Label("Containers"))
         self.notebook.append_page(self.image_page, Gtk.Label("Images"))
 
 

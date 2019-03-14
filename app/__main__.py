@@ -60,7 +60,7 @@ def main():
     args = read_args()
     docker_client = docker.from_env()
     dockers = process_args(args, docker_client)
-    _gui = __import__("gui.app_window", fromlist=['app_window'])
+    _gui = __import__("gui.docker_window", fromlist=['docker_window'])
     _gui.run(dockers, docker_client)
 
 

@@ -173,7 +173,7 @@ class ImageInfoListBox(Gtk.ListBox):
     def create_rows(self, image):
         """
         Creates listbox rows with the dockerfile of the selected image.
-        :param image: docker container
+        :param image: docker image
         """
         dockerfile = docker_commands.dockerfile_from_image(image)
 

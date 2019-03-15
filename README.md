@@ -10,7 +10,7 @@ $ pip3 install .
 
 ## Run
 ```
-$ python app/__main__.py
+$ python3 app/__main__.py
 ```
 
 ## Requiremnts

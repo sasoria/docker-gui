@@ -33,19 +33,6 @@ function install_npm () {
     echo "npm install done.";
 }
 
-function install_meow () {
-    echo "Installing meow";
-    npm install meow
-    echo "npm install done.";
-}
-
-function install_dockerode () {
-    echo "Installing npm";
-    npm install dockerode
-    echo "npm install done.";
-
-}
-
 function clean_up () {
   # potential rm -rf
 }

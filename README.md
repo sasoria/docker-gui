@@ -1,16 +1,20 @@
 # docker-gui
 A lightweight graphical interface for docker in GTK 3. This app displays docker containers and docker images. It also allows users to run images, kill containers and displays information about containers and images. The latter as a dockerfile of the selected image.
 
+## Install
+```
+$ git clone https://github.com/sasoria/docker-gui.git
+$ cd docker-gui
+$ pip3 install .
+```
+
 ## Run
 ```
 $ python app/__main__.py
 ```
 
 ## Requiremnts
-### pip
-```
-$ pip3 install docker
-```
+
 ### npm
 ```
 $ npm install meow

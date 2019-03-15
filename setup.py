@@ -45,8 +45,3 @@ setuptools.setup(
     include_package_data=True,
     data_files=[('bin/', ['app/data/start.sh'])]
 )
-
-
-
-
-

@@ -14,7 +14,7 @@ except IOError as error:
     pass
 
 VERSION = app.__version__
-DOWNLOAD = "https://github.com/sasoria/docker-gui/archive/%s.tar.gz" % VERSION
+DOWNLOAD = "https://github.com/sasoria/docker-gui/archive/master.zip"
 
 
 setuptools.setup(

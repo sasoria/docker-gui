@@ -22,9 +22,12 @@ $ sudo pip3 install .
 $ docker-gui
 ```
 ## Notes
-This app requires docker to be managed as a non-root user. See [Post-installation steps for Linux
-](https://docs.docker.com/install/linux/linux-postinstall/) for further details.
-
+This app requires docker to be managed as a non-root user with,
+```
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+```
+See [Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/) for further details.
 ## Example
 ![Container](https://github.com/sasoria/docker-gui/blob/master/docs/containers_cropped.png)
 

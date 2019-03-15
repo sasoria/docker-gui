@@ -5,12 +5,12 @@ A lightweight graphical interface for docker in GTK 3. This app displays docker 
 ```
 $ git clone https://github.com/sasoria/docker-gui.git
 $ cd docker-gui
-$ pip3 install .
+$ sudo pip3 install .
 ```
 
 ## Run
 ```
-$ python3 app/__main__.py
+$ docker-gui
 ```
 
 ## Requiremnts

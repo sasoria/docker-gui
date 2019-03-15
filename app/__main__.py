@@ -53,8 +53,6 @@ def process_args(args, docker_client):
         'containers': docker_commands.list_containers(docker_client)
     }
 
-    return dockers
-
 
 def main():
     args = read_args()

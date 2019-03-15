@@ -9,7 +9,7 @@ A lightweight graphical interface for docker in GTK 3. This app displays docker 
 ### npm
 ```
 $ sudo apt install npm
-$ npm i -g dockerfile-from-image
+$ sudo npm i -g dockerfile-from-image
 ```
 ## Install
 ```

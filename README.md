@@ -3,7 +3,7 @@ A lightweight graphical interface for docker in GTK 3. This app displays docker 
 ## Dependencies
 * docker sdk
 * dockerode
-* npm (nodejs)
+* npm (nodejs >= 7.6)
 * meow
 * [dfimage](https://github.com/52cik/dockerfile-from-image)
 ### npm

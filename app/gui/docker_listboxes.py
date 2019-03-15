@@ -1,6 +1,6 @@
 import gi.repository.Gtk as Gtk
 from . docker_labels import ContainerLabel, ImageLabel
-from src import docker_commands
+from ..src import docker_commands
 
 
 class ContainerListBox(Gtk.ListBox):

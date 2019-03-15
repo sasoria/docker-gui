@@ -2,7 +2,6 @@ import gi.repository.Gtk as Gtk
 import docker
 import sys
 from . docker_listboxes import ContainerListBox, ContainerInfoListBox, ImageListBox, ImageInfoListBox
-from src import docker_commands
 # from gi import require_version
 # require_version("GTK", "3.0")
 

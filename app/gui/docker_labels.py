@@ -1,5 +1,5 @@
 import gi.repository.Gtk as Gtk
-from src import docker_commands
+from ..src import docker_commands
 
 
 class ContainerLabel(Gtk.Label):

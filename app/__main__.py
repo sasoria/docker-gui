@@ -1,6 +1,6 @@
 import argparse
 import docker
-from src import docker_commands
+from .src import docker_commands
 
 
 def read_args():

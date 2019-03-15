@@ -5,7 +5,7 @@ A lightweight graphical interface for docker in GTK 3. This app displays docker 
 * dockerode
 * npm (nodejs >= 7.6)
 * meow
-* [dfimage](https://github.com/52cik/dockerfile-from-image)
+* [dockerfile-from-image](https://github.com/52cik/dockerfile-from-image)
 ### npm
 ```
 $ sudo apt install npm

@@ -7,11 +7,13 @@
 OS=$(lsb_release -a | grep -o Ubuntu | head -1)
 NPM_VER=$(npm -version)
 NODE_VER=$(node --version | tr -d v | cut -d . -f 1,2 | tr -d ".")
-PIP_VER=$(pip3 --version | grep -o pip) # fixme select ver
+
+echo $OS
+echo $NPM_VER
+echo $NODE_VER
 
 function usage () {
     echo "this script will
-    * install pip3
     * install npm
     * install dfimage
     * install docker (optional)
@@ -21,29 +23,19 @@ function usage () {
 function check_os () { 
 	if [ -n $OS ]; then
 		echo "running ubuntu..."
-        	return 0;
-    	else
-        	echo "exit : please run this script in ubuntu"
+        return 0;
+    else
+        echo "exit : please run this script in ubuntu"
         exit 1;
-    	fi
+    fi
 }
 
 function check_node () {
     if [ $NODE_VER -lt 76 ]; then
         echo "Exit : please install a node version >= 7.6 to run this script";
-        exit 1;
+        return 1;
     else
         return 0
-    fi
-}
-
-function install_pip () {
-    if [ -n $PIP_VER ]; then
-        echo "pip3 already installed"
-    else
-        echo "installing pip"
-        sudo apt install python3-pip
-        echo "pip install done"
     fi
 }
 
@@ -59,7 +51,8 @@ function install_npm () {
 
 function install_docker () {
     read -p "do you want to install docker.io (y/n)? " -n 1 -r
-    echo    # (optional) move to a new line
+    echo
+
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "Installing docker.io"
         sudo apt install docker.io
@@ -69,7 +62,8 @@ function install_docker () {
 
 function setup_docker () {
     read -p "do you want add $USER to group <docker> (y/n)? " -n 1 -r
-    echo    # (optional) move to a new line
+    echo
+
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "setting up docker group"
         sudo groupadd docker
@@ -91,8 +85,6 @@ function install_dfimage () {
 function main () {
     usage
     check_os
-
-    install_pip
 
     install_npm
     install_dfimage

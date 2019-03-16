@@ -39,7 +39,8 @@ function install_npm () {
     if [ -P npm ]; then
         echo "[start.sh] npm already installed"
     else
-        echo "[start.sh] Installing npm"
+        echo "[start.sh] installing npm..."
+        sleep 1000
         sudo apt install npm
         echo "[start.sh] npm install done."
     fi
@@ -50,7 +51,8 @@ function install_docker () {
     echo
 
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "[start.sh] installing docker.io"
+        echo "[start.sh] installing docker.io ..."
+        sleep 1000
         sudo apt install docker.io
         echo "[start.sh] docker.io install done"
     fi
@@ -61,7 +63,8 @@ function setup_docker () {
     echo
 
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "[start.sh] setting up docker group"
+        echo "[start.sh] setting up docker group..."
+        sleep 1000
         sudo groupadd docker
         sudo usermod -aG docker $USER
         echo "[start.sh] $USER added to group <docker>"
@@ -72,7 +75,8 @@ function install_dfimage () {
     if [ $(npm list -g dockerfile-from-image | grep -o dockerfile) ]; then
         echo "[start.sh] dfimage already installed"
     else
-        echo "[start.sh] installing dfimage"
+        echo "[start.sh] installing dfimage..."
+        sleep 1000
         sudo npm i -g dockerfile-from-image
         echo "[start.sh] dfimage install done"
     fi
@@ -90,6 +94,7 @@ function main () {
     setup_docker
 
     echo "[start.sh] install done"
+    sleep 1000
 }
 
 main

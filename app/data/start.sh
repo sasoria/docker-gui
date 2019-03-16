@@ -16,8 +16,8 @@ function usage () {
 function check_os () {
     OS=$(lsb_release -a | grep -o Ubuntu | head -1)
 
-	if [[ -n $OS ]]; then
-		echo "[start.sh] running ubuntu..."
+    if [[ -n $OS ]]; then
+	echo "[start.sh] running ubuntu..."
         return 0;
     else
         echo "[start.sh] exit : please run this script in ubuntu"
@@ -72,7 +72,7 @@ function setup_docker () {
         sleep 2
         sudo groupadd docker
         sudo usermod -aG docker $USER
-        echo "[start.sh] $USER added to group <docker>"
+        echo "[start.sh] $USER added to group <docker>, please restart or log off to let changes take effect"
     fi
 }
 

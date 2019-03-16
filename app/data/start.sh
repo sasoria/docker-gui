@@ -4,14 +4,6 @@
 #  DESCRIPTION:  Installs docker-gui dependencies.
 #===============================================================================
 
-OS=$(lsb_release -a | grep -o Ubuntu | head -1)
-NPM_VER=$(npm -version)
-NODE_VER=$(node --version | tr -d v | cut -d . -f 1,2 | tr -d ".")
-
-echo $OS
-echo $NPM_VER
-echo $NODE_VER
-
 function usage () {
     echo "this script will
     * install npm
@@ -20,19 +12,23 @@ function usage () {
     * add $USER to group <docker> (optional)"
 }
 
-function check_os () { 
+function check_os () {
+    OS=$(lsb_release -a | grep -o Ubuntu | head -1)
+
 	if [ -n $OS ]; then
-		echo "running ubuntu..."
+		echo "[start.sh] running ubuntu..."
         return 0;
     else
-        echo "exit : please run this script in ubuntu"
+        echo "[start.sh] exit : please run this script in ubuntu"
         exit 1;
     fi
 }
 
 function check_node () {
+    NODE_VER=$(node --version | tr -d v | cut -d . -f 1,2 | tr -d ".")
+
     if [ $NODE_VER -lt 76 ]; then
-        echo "Exit : please install a node version >= 7.6 to run this script";
+        echo "[start.sh] exit : please install a node version >= 7.6 to run this script";
         return 1;
     else
         return 0
@@ -40,45 +36,45 @@ function check_node () {
 }
 
 function install_npm () {
-    if [ -n $NPM_VER ]; then
-        echo "npm already installed"
+    if [ -P npm ]; then
+        echo "[start.sh] npm already installed"
     else
-        echo "Installing npm"
+        echo "[start.sh] Installing npm"
         sudo apt install npm
-        echo "npm install done."
+        echo "[start.sh] npm install done."
     fi
 }
 
 function install_docker () {
-    read -p "do you want to install docker.io (y/n)? " -n 1 -r
+    read -p "[start.sh] do you want to install docker.io (y/n)? " -n 1 -r
     echo
 
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "Installing docker.io"
+        echo "[start.sh] installing docker.io"
         sudo apt install docker.io
-        echo "docker.io install done"
+        echo "[start.sh] docker.io install done"
     fi
 }
 
 function setup_docker () {
-    read -p "do you want add $USER to group <docker> (y/n)? " -n 1 -r
+    read -p "[start.sh] do you want add $USER to group <docker> (y/n)? " -n 1 -r
     echo
 
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "setting up docker group"
+        echo "[start.sh] setting up docker group"
         sudo groupadd docker
         sudo usermod -aG docker $USER
-        echo "$USER added to group <docker>"
+        echo "[start.sh] $USER added to group <docker>"
     fi
 }
 
 function install_dfimage () {
     if [ $(npm list -g dockerfile-from-image | grep -o dockerfile) ]; then
-        echo "dfimage already installed"
+        echo "[start.sh] dfimage already installed"
     else
-        echo "Installing dfimage"
+        echo "[start.sh] installing dfimage"
         sudo npm i -g dockerfile-from-image
-        echo "dfimage install done"
+        echo "[start.sh] dfimage install done"
     fi
 }
 
@@ -93,7 +89,7 @@ function main () {
     install_docker
     setup_docker
 
-    echo "install done"
+    echo "[start.sh] install done"
 }
 
 main

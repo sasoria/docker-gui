@@ -25,7 +25,7 @@ function check_os () {
 }
 
 function check_node () {
-    if [ -P node ]; then
+    if [ type -P node ]; then
         NODE_VER=$(node --version | tr -d v | cut -d . -f 1,2 | tr -d ".")
     else
         NODE_VER=0
@@ -40,7 +40,7 @@ function check_node () {
 }
 
 function install_npm () {
-    if [ -P npm ]; then
+    if [ type -P npm ]; then
         echo "[start.sh] npm already installed"
     else
         echo "[start.sh] installing npm..."

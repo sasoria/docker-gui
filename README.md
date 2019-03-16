@@ -6,17 +6,28 @@ A lightweight graphical interface for docker in GTK 3. This app displays docker 
 * npm (nodejs >= 7.6)
 * meow
 * [dockerfile-from-image](https://github.com/52cik/dockerfile-from-image)
-### npm
-```
-$ sudo apt install npm
-$ sudo npm i -g dockerfile-from-image
-```
+
 ## Install
 ```
 $ git clone https://github.com/sasoria/docker-gui.git
 $ cd docker-gui
 $ sudo pip3 install .
 ```
+## Setup
+#### Ubuntu (18.04)
+```
+$ sudo start.sh
+```
+#### Other
+```
+$ sudo apt install docker.io
+$ sudo groupadd docker
+$ sudo usermode -aG docker $USER
+
+$ sudo apt install npm
+$ sudo npm i -g dockerfile-from-image
+```
+
 ## Run
 ```
 $ docker-gui

@@ -10,12 +10,13 @@ function usage () {
     * install dfimage
     * install docker (optional)
     * add $USER to group <docker> (optional)"
+    sleep 2
 }
 
 function check_os () {
     OS=$(lsb_release -a | grep -o Ubuntu | head -1)
 
-	if [ -n $OS ]; then
+	if [[ -n $OS ]]; then
 		echo "[start.sh] running ubuntu..."
         return 0;
     else
@@ -25,7 +26,7 @@ function check_os () {
 }
 
 function check_node () {
-    if [ type -P node ]; then
+    if [ $(type -P node) ]; then
         NODE_VER=$(node --version | tr -d v | cut -d . -f 1,2 | tr -d ".")
     else
         NODE_VER=0
@@ -40,11 +41,11 @@ function check_node () {
 }
 
 function install_npm () {
-    if [ type -P npm ]; then
+    if [ $(type -P npm) ]; then
         echo "[start.sh] npm already installed"
     else
         echo "[start.sh] installing npm..."
-        sleep 1
+        sleep 2
         sudo apt install npm
         echo "[start.sh] npm install done."
     fi
@@ -56,7 +57,7 @@ function install_docker () {
 
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "[start.sh] installing docker.io ..."
-        sleep 1
+        sleep 2
         sudo apt install docker.io
         echo "[start.sh] docker.io install done"
     fi
@@ -68,7 +69,7 @@ function setup_docker () {
 
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "[start.sh] setting up docker group..."
-        sleep 1
+        sleep 2
         sudo groupadd docker
         sudo usermod -aG docker $USER
         echo "[start.sh] $USER added to group <docker>"
@@ -80,7 +81,7 @@ function install_dfimage () {
         echo "[start.sh] dfimage already installed"
     else
         echo "[start.sh] installing dfimage..."
-        sleep 1
+        sleep 2
         sudo npm i -g dockerfile-from-image
         echo "[start.sh] dfimage install done"
     fi
@@ -98,7 +99,7 @@ function main () {
     setup_docker
 
     echo "[start.sh] install done"
-    sleep 1
+    sleep 2
 }
 
 main

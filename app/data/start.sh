@@ -25,7 +25,11 @@ function check_os () {
 }
 
 function check_node () {
-    NODE_VER=$(node --version | tr -d v | cut -d . -f 1,2 | tr -d ".")
+    if [ -P node ]; then
+        NODE_VER=$(node --version | tr -d v | cut -d . -f 1,2 | tr -d ".")
+    else
+        NODE_VER=0
+    fi
 
     if [ $NODE_VER -lt 76 ]; then
         echo "[start.sh] exit : please install a node version >= 7.6 to run this script";

@@ -20,11 +20,11 @@ $ sudo start.sh
 ```
 #### Other
 ```
-$ sudo apt install docker.io
+$ sudo [package manager] install docker.io
 $ sudo groupadd docker
 $ sudo usermode -aG docker $USER
 
-$ sudo apt install npm
+$ sudo [package manager] install npm
 $ sudo npm i -g dockerfile-from-image
 ```
 

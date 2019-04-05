@@ -19,8 +19,11 @@ class ImageLabel(Gtk.Label):
     """ An ImageLabel displays the image tag of an image. """
     def __init__(self, docker_image):
         Gtk.Label.__init__(self, xalign=0)
+
+        if self.docker_image.tags:
+            self.text = self.docker_image.tags[0]
+
         self.docker_image = docker_image
-        self.text = self.docker_image.tags[0]
         self.set_text(self.text)
 
     def get_docker_image(self):

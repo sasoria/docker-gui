@@ -1,5 +1,6 @@
 # docker-gui
-A lightweight graphical interface for docker in GTK 3. This app displays docker containers and docker images. It also allows users to run images, kill containers and displays information about containers and images. The latter as a dockerfile of the selected image.
+A lightweight graphical interface for docker in GTK 3. This app displays docker containers and docker images. It also allows users to run images, kill containers and displays information about containers and images. The latter as a dockerfile of the selected image. Unlike other Docker GUI's, this implementation shows the Dockerfile of running containers.
+
 ## Dependencies
 * docker sdk
 * dockerode
